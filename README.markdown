@@ -1,12 +1,10 @@
 # Atlassian Crowd Puppet Module
 
-[![Build Status](https://travis-ci.org/joshbeard/puppet-crowd.png?branch=master)](https://travis-ci.org/joshbeard/puppet-crowd)
 
  This puppet module is used to install and configure the crowd application.
  Atlassian Crowd is a Single Sign-On (SSO) and Identity Management service.
  https://www.atlassian.com/software/crowd/overview
 
- Forked from [https://github.com/actionjack/puppet-crowd](https://github.com/actionjack/puppet-crowd)
 
 * * *
 
