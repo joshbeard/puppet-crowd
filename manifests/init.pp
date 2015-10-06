@@ -69,7 +69,7 @@ class crowd (
   $iddburl   = "jdbc:${iddb}://${iddbserver}:${iddbport}/${iddbname}"
 
   class{'crowd::install':} ->
-  class{'crowd::config':} =>
+  class{'crowd::config':} ->
   class{'crowd::service':}
 
 }
