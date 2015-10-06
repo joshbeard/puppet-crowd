@@ -1,12 +1,22 @@
 {
-  "name": "joshbeard-crowd",
-  "version": "0.1.8",
-  "author": "joshbeard",
+  "name": "ffquintella-crowd",
+  "version": "0.2.0",
+  "author": "ffquintella",
   "summary": "Atlassian Crowd Puppet Module",
   "license": "Apache-2.0",
-  "source": "https://github.com/joshbeard/puppet-crowd",
-  "project_page": "https://github.com/joshbeard/puppet-crowd",
-  "issues_url": "https://github.com/joshbeard/puppet-crowd/issues",
+  "source": "https://github.com/ffquintella/puppet-crowd",
+  "project_page": "https://github.com/ffquintella/puppet-crowd",
+  "issues_url": "https://github.com/ffquintella/puppet-crowd/issues",
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "4.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "4.x"
+    }
+  ],
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",

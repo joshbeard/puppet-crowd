@@ -42,13 +42,14 @@ $ puppet doc manifest/init.pp
 
 ## Limitations
 
- This module has been built on and tested against Puppet 2.7 and higher.
+ This module has been built on and tested against Puppet 4.0 and higher.
 
  The module has been tested on:
 
- * Ubuntu 12.04
  * EL 6
+ * EL 7
 
  The module has been tested against the following database(s):
 
  * MySQL
+ * Oracle
