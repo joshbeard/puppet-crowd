@@ -68,8 +68,8 @@ class crowd (
   $dburl     = "jdbc:${db}://${dbserver}:${dbport}/${dbname}"
   $iddburl   = "jdbc:${iddb}://${iddbserver}:${iddbport}/${iddbname}"
 
-  include crowd::install
-  include crowd::config
-  include crowd::service
+  class{'crowd::install':} ->
+  class{'crowd::config':} ->
+  class{'crowd::service':}
 
 }
