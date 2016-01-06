@@ -203,7 +203,7 @@ Optional specified GID to use if managing the group.
 
 __`shell`__
 
-Default:  '/sbin/nologin'
+Default:  '/sbin/nologin' and '/usr/sbin/nologin' on Debian.
 
 The shell that the `user` should have set, if this module is to manage the user.
 
