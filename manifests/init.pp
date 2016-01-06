@@ -21,7 +21,7 @@ class crowd (
   $group                      = 'crowd',
   $uid                        = undef,
   $gid                        = undef,
-  $shell                      = '/sbin/nologin',
+  $shell                      = $crowd::params::shell,
   $password                   = '*',
   $download_driver            = true,
   $mysql_driver               = 'http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar',
