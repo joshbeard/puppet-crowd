@@ -4,7 +4,7 @@
 # Refer to the README for documentation
 #
 class crowd (
-  $version                    = '2.8.3',
+  $version                    = '2.8.4',
   $extension                  = 'tar.gz',
   $product                    = 'crowd',
   $installdir                 = '/opt/crowd',
@@ -25,7 +25,7 @@ class crowd (
   $password                   = '*',
   $download_driver            = true,
   $mysql_driver               = 'http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar',
-  $download_url               = 'http://www.atlassian.com/software/crowd/downloads/binary/',
+  $download_url               = 'https://www.atlassian.com/software/crowd/downloads/binary/',
   $java_home                  = '/usr/lib/jvm/java',
   $jvm_xms                    = '256m',
   $jvm_xmx                    = '512m',

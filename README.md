@@ -87,7 +87,7 @@ class { 'crowd':
 
 __`version`__
 
-Default:  '2.8.3'
+Default:  '2.8.4'
 
 The version of Crowd to download and install.  MAJOR.MINOR.PATCH
 
@@ -232,7 +232,7 @@ should be set to the URL to download the `.jar` file from.
 
 __`download_url`__
 
-Default:  'http://www.atlassian.com/software/crowd/downloads/binary/'
+Default:  'https://www.atlassian.com/software/crowd/downloads/binary/'
 
 The base URL to download Crowd from.
 
