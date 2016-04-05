@@ -1,4 +1,4 @@
-## 2016-04-05 - Release 1.0.4 (deleted)
+## 2016-04-05 - Release 1.0.4
 
 ### Summary
 
