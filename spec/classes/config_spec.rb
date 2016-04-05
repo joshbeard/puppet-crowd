@@ -6,7 +6,7 @@ describe 'crowd::config' do
     let :pre_condition do
       "class { 'crowd': }"
     end
-    it { is_expected.to contain_augeas('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/server.xml').with({
+    it { is_expected.to contain_augeas('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/server.xml').with({
       :changes => [
         "set Server/Service/Connector/#attribute/maxThreads '150'",
         "set Server/Service/Connector/#attribute/minSpareThreads '25'",
@@ -16,37 +16,37 @@ describe 'crowd::config' do
       ],
     })}
 
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/bin/setenv.sh').with({
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/bin/setenv.sh').with({
       :content => /JAVA_HOME="\/usr\/lib\/jvm\/java"/,
     })}
 
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/bin/setenv.sh').with({
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/bin/setenv.sh').with({
       :content => /JAVA_OPTS="-Xms256m -Xmx512m  -XX:MaxPermSize=256m/,
     })}
 
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/bin/setenv.sh').with({
-      :content => /CATALINA_PID="\/opt\/crowd\/atlassian-crowd-2.8.3-standalone\/apache-tomcat\/work\/crowd.pid"/,
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/bin/setenv.sh').with({
+      :content => /CATALINA_PID="\/opt\/crowd\/atlassian-crowd-2.8.4-standalone\/apache-tomcat\/work\/crowd.pid"/,
     })}
 
 
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/crowd-webapp/WEB-INF/classes/crowd-init.properties').with({
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/crowd-webapp/WEB-INF/classes/crowd-init.properties').with({
       :content => /crowd\.home=\/var\/local\/crowd/,
     })}
 
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
       :content => /username="crowd"/
     })}
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
       :content => /driverClassName="com\.mysql\.jdbc\.Driver"/
     })}
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
       :content => /url="jdbc:mysql:\/\/localhost:3306\/crowdid/
     })}
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
       :content => /validationQuery="Select 1"/
     })}
 
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/crowd-openidserver-webapp/WEB-INF/classes/jdbc.properties').with({
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/crowd-openidserver-webapp/WEB-INF/classes/jdbc.properties').with({
       :content => /hibernate\.dialect=org\.hibernate\.dialect\.MySQL5InnoDBDialect/
     })}
   end
@@ -67,7 +67,7 @@ describe 'crowd::config' do
           }
         }"
       end
-      it { is_expected.to contain_augeas('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/server.xml').with({
+      it { is_expected.to contain_augeas('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/server.xml').with({
         :changes => [
           "set Server/Service/Connector/#attribute/maxThreads '200'",
           "set Server/Service/Connector/#attribute/minSpareThreads '50'",
@@ -86,7 +86,7 @@ describe 'crowd::config' do
         "class { 'crowd': java_home => '/path/to/java' }"
       end
 
-      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/bin/setenv.sh').with({
+      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/bin/setenv.sh').with({
         :content => /JAVA_HOME="\/path\/to\/java"/,
       })}
     end
@@ -96,7 +96,7 @@ describe 'crowd::config' do
         "class { 'crowd': jvm_opts => '-Dfoo.bar' }"
       end
 
-      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/bin/setenv.sh').with({
+      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/bin/setenv.sh').with({
         :content => /JAVA_OPTS="-Xms256m -Xmx512m -Dfoo\.bar -XX:MaxPermSize=256m/,
       })}
     end
@@ -105,7 +105,7 @@ describe 'crowd::config' do
       let :pre_condition do
         "class { 'crowd': homedir => '/home/crowd' }"
       end
-      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/crowd-webapp/WEB-INF/classes/crowd-init.properties').with({
+      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/crowd-webapp/WEB-INF/classes/crowd-init.properties').with({
         :content => /crowd\.home=\/home\/crowd/,
       })}
     end
@@ -114,7 +114,7 @@ describe 'crowd::config' do
       let :pre_condition do
         "class { 'crowd': dbuser => 'charlie', iddbuser => 'charlie' }"
       end
-      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
         :content => /username="charlie"/
       })}
     end
@@ -126,17 +126,17 @@ describe 'crowd::config' do
           iddb => 'postgres',
         }"
       end
-      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
         :content => /driverClassName="org\.postgresql\.Driver"/
       })}
-      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
         :content => /url="jdbc:postgresql:\/\/localhost:5432\/crowdid/
       })}
-      it { is_expected.not_to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+      it { is_expected.not_to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
         :content => /validationQuery="Select 1"/
       })}
 
-      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone/crowd-openidserver-webapp/WEB-INF/classes/jdbc.properties').with({
+      it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone/crowd-openidserver-webapp/WEB-INF/classes/jdbc.properties').with({
         :content => /hibernate\.dialect=org\.hibernate\.dialect\.PostgreSQLDialect/
       })}
     end

@@ -15,27 +15,27 @@ describe 'crowd::install' do
     it { is_expected.to contain_group('crowd') }
 
     it { is_expected.to contain_file('/opt/crowd') }
-    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.3-standalone') }
+    it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone') }
     it { is_expected.to contain_file('/var/local/crowd') }
 
-    it { is_expected.to contain_staging__file('atlassian-crowd-2.8.3.tar.gz').with({
-      :source => 'http://www.atlassian.com/software/crowd/downloads/binary/atlassian-crowd-2.8.3.tar.gz',
+    it { is_expected.to contain_staging__file('atlassian-crowd-2.8.4.tar.gz').with({
+      :source => 'https://www.atlassian.com/software/crowd/downloads/binary/atlassian-crowd-2.8.4.tar.gz',
     })}
 
-    it { is_expected.to contain_staging__extract('atlassian-crowd-2.8.3.tar.gz').with({
-      :target  => '/opt/crowd/atlassian-crowd-2.8.3-standalone',
-      :creates => '/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat',
+    it { is_expected.to contain_staging__extract('atlassian-crowd-2.8.4.tar.gz').with({
+      :target  => '/opt/crowd/atlassian-crowd-2.8.4-standalone',
+      :creates => '/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat',
       :user    => 'crowd',
       :group   => 'crowd',
     })}
 
     it { is_expected.to contain_staging__file('jdbc driver').with({
       :source => 'http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar',
-      :target => '/opt/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat/lib/mysql-connector-java-5.1.36.jar',
+      :target => '/opt/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat/lib/mysql-connector-java-5.1.36.jar',
     })}
 
-    it { is_expected.to contain_exec('chown_/opt/crowd/atlassian-crowd-2.8.3-standalone').with({
-      :command => 'chown -R crowd:crowd /opt/crowd/atlassian-crowd-2.8.3-standalone',
+    it { is_expected.to contain_exec('chown_/opt/crowd/atlassian-crowd-2.8.4-standalone').with({
+      :command => 'chown -R crowd:crowd /opt/crowd/atlassian-crowd-2.8.4-standalone',
     })}
   end
 
@@ -57,10 +57,10 @@ describe 'crowd::install' do
         "class { 'crowd': installdir => '/svr/crowd' }"
       end
       it { is_expected.to contain_file('/svr/crowd') }
-      it { is_expected.to contain_file('/svr/crowd/atlassian-crowd-2.8.3-standalone') }
-      it { is_expected.to contain_staging__extract('atlassian-crowd-2.8.3.tar.gz').with({
-        :target => '/svr/crowd/atlassian-crowd-2.8.3-standalone',
-        :creates => '/svr/crowd/atlassian-crowd-2.8.3-standalone/apache-tomcat',
+      it { is_expected.to contain_file('/svr/crowd/atlassian-crowd-2.8.4-standalone') }
+      it { is_expected.to contain_staging__extract('atlassian-crowd-2.8.4.tar.gz').with({
+        :target => '/svr/crowd/atlassian-crowd-2.8.4-standalone',
+        :creates => '/svr/crowd/atlassian-crowd-2.8.4-standalone/apache-tomcat',
       })}
     end
 
@@ -78,7 +78,7 @@ describe 'crowd::install' do
       it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.8.4-standalone') }
 
       it { is_expected.to contain_staging__file('atlassian-crowd-2.8.4.tar.gz').with({
-        :source => 'http://www.atlassian.com/software/crowd/downloads/binary/atlassian-crowd-2.8.4.tar.gz',
+        :source => 'https://www.atlassian.com/software/crowd/downloads/binary/atlassian-crowd-2.8.4.tar.gz',
       })}
 
       it { is_expected.to contain_staging__extract('atlassian-crowd-2.8.4.tar.gz').with({
@@ -114,8 +114,8 @@ describe 'crowd::install' do
           download_url => 'http://mirror.foo.com/',
         }"
       end
-      it { is_expected.to contain_staging__file('atlassian-crowd-2.8.3.tar.gz').with({
-        :source => 'http://mirror.foo.com/atlassian-crowd-2.8.3.tar.gz',
+      it { is_expected.to contain_staging__file('atlassian-crowd-2.8.4.tar.gz').with({
+        :source => 'http://mirror.foo.com/atlassian-crowd-2.8.4.tar.gz',
       })}
     end
 
