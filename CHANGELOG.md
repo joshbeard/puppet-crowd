@@ -1,4 +1,10 @@
-## 2016-04-05 - Release 1.0.3
+## 2016-04-05 - Release 1.0.4 (deleted)
+
+### Summary
+
+- Update tests
+
+## 2016-04-05 - Release 1.0.3 (deleted)
 
 ### Summary
 
