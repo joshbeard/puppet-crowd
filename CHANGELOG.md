@@ -1,3 +1,10 @@
+## 2016-04-05 - Release 1.0.3
+
+### Summary
+
+- Fix default download_url to use https (issue #5)
+- Bump default version to 2.8.4
+
 ## 2016-01-06 - Release 1.0.2
 
 ### Summary
