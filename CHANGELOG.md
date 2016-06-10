@@ -1,3 +1,9 @@
+## 2016-06-10 - Release 1.0.5
+
+### Summary
+
+- Dependency metadata updated (s/nanliu-staging/puppet-staging) (issue #7)
+
 ## 2016-04-05 - Release 1.0.4
 
 ### Summary

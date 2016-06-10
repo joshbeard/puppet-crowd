@@ -36,7 +36,7 @@ wizard, providing a license key and some basic configuration.
 Current dependencies are:
 
  * puppetlabs/stdlib
- * nanliu/staging or puppetcommunity/staging
+ * puppet/staging
 
 A Java installation is also required.
 [puppetlabs/java](https://forge.puppetlabs.com/puppetlabs/java) is recommended.
