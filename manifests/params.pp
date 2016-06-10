@@ -1,3 +1,5 @@
+# Class crowd::params
+#
 class crowd::params {
 
   case $::osfamily {
