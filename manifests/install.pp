@@ -61,7 +61,7 @@ class crowd::install {
     require => Staging::File[$file],
   }
 
-  file { '/var/log/crowd':
+  file { $crowd::logdir:
     ensure => 'directory',
     owner  => $crowd::user,
     group  => $crowd::group,
