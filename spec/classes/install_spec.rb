@@ -48,8 +48,8 @@ describe 'crowd::install' do
         }"
       end
 
-      it { is_expected.not_to contain_user }
-      it { is_expected.not_to contain_group }
+      it { is_expected.to_not contain_user('crowd') }
+      it { is_expected.to_not contain_group('crowd') }
     end
 
     describe 'installdir' do
