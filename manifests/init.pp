@@ -67,9 +67,9 @@ class crowd (
   validate_hash($proxy)
   validate_bool($manage_user)
   validate_bool($manage_group)
-
-  validate_re($user, '^[a-z_][a-z0-9_-]*[$]?$')
-  validate_re($group, '^[a-z_][a-z0-9_-]*[$]?$')
+  $_user_group_regex = '^[a-z_][a-z\.0-9_-]*[$]?$'
+  validate_re($user, $_user_group_regex)
+  validate_re($group, $_user_group_regex)
 
   if $uid { validate_integer($uid) }
   if $gid { validate_integer($gid) }
