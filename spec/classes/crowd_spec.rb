@@ -80,10 +80,19 @@ describe 'crowd' do
       it { expect { catalogue }.to raise_error(Puppet::Error, /should be modulename/) }
     end
 
-    %w(dbuser iddbuser user group).each do |user|
+    %w(dbuser iddbuser).each do |user|
       describe user do
         let(:params) {{ user => 'not.valid' }}
         it { expect { catalogue }.to raise_error(Puppet::Error, /does not match/) }
+      end
+    end
+
+    os, facts = on_supported_os.first
+    %w(user group).each do |user|
+      describe user do
+        let(:facts){facts}
+        let(:params) {{ user => 'iam.valid' }}
+          it { is_expected.to compile }
       end
     end
   end
