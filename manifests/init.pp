@@ -69,9 +69,9 @@ class crowd (
   validate_hash($proxy)
   validate_bool($manage_user)
   validate_bool($manage_group)
-
-  validate_re($user, '^[a-z_][a-z0-9_-]*[$]?$')
-  validate_re($group, '^[a-z_][a-z0-9_-]*[$]?$')
+  $_user_group_regex = '^[a-z_][a-z\.0-9_-]*[$]?$'
+  validate_re($user, $_user_group_regex)
+  validate_re($group, $_user_group_regex)
 
   if $uid { validate_integer($uid) }
   if $gid { validate_integer($gid) }
@@ -79,11 +79,11 @@ class crowd (
   validate_string($password)
   validate_absolute_path($shell)
 
-  validate_re($download_url, '^((https?|ftps?|puppet?):\/\/\/)(([\da-z\.-]+)\.?([a-z\.]{2,6})([\/\w \.-]*)*\/)??$')
+  validate_re($download_url, '^((https?|ftps?):\/\/)([\da-z\.-]+)\.?([\da-z\.]{2,6})([\/\w \.\:-]*)*\/?$')
 
   validate_bool($download_driver)
   if $db == 'mysql' {
-    validate_re($mysql_driver, '^((https?|ftps?):\/\/)([\da-z\.-]+)\.?([a-z\.]{2,6})([\/\w \.-]*)*\/?\.jar$')
+    validate_re($mysql_driver, '^((https?|ftps?):\/\/)([\da-z\.-]+)\.?([\da-z\.]{2,6})([\/\w \.\:-]*)*\/?\.jar$')
   }
 
   validate_absolute_path($java_home)
