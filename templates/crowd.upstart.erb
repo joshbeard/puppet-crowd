@@ -12,6 +12,6 @@ setgid <%= scope.lookupvar('crowd::group') %>
 env BASEDIR=<%= scope.lookupvar('crowd::app_dir') %>/apache-tomcat
 
 script
-    LOGFILE=/var/log/crowd/crowd.`date +%Y-%m-%d`.log
+    LOGFILE=<%= scope.lookupvar('crowd::logdir') %>/crowd.`date +%Y-%m-%d`.log
     exec $BASEDIR/bin/catalina.sh run >> $LOGFILE 2>&1
 end script
