@@ -270,7 +270,7 @@ __`db`__
 
 Default:  'mysql'
 
-The database type to use.  The module supports either `mysql` or `postgres`
+The database type to use.  The module supports either `mysql`, `postgres` or `mssql`
 
 __`dbuser`__
 
@@ -300,15 +300,16 @@ __`dbport`__
 
 Default: undef
 
-The port for accessing the database server.  Defaults to '5432' for Postgres
-and '3306' for MySQL.
+The port for accessing the database server.  Defaults to '5432' for Postgres,
+'3306' for MySQL and '1433' for MSSQL.
 
 __`dbdriver`__
 
 Default: undef
 
 Defaults to `com.mysql.jdbc.Driver` when `db` is set to `mysql` and
-`org.postgresql.Driver` when `db` is set to `postgres`
+`org.postgresql.Driver` when `db` is set to `postgres`. For MSSQL it defaults
+to the JTDS driver that is supplied by Crowd.
 
 
 __`iddb`__
@@ -348,14 +349,15 @@ __`iddbport`__
 Default: undef
 
 The port for accessing the CrowdID database server.  Defaults to '5432' for Postgres
-and '3306' for MySQL.
+and '3306' for MySQL. Defaults to '1433' when using MSSQL.
 
 __`iddbdriver`__
 
 Default: undef
 
 Defaults to `com.mysql.jdbc.Driver` when `db` is set to `mysql` and
-`org.postgresql.Driver` when `db` is set to `postgres`
+`org.postgresql.Driver` when `db` is set to `postgres`. For MSSQL it defaults
+to the JTDS driver that is shipped with Crowd.
 
 __`manage_service`__
 
