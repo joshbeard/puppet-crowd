@@ -9,6 +9,7 @@ class crowd (
   $product                    = 'crowd',
   $installdir                 = '/opt/crowd',
   $homedir                    = '/var/local/crowd',
+  $logdir                     = '/var/log/crowd',
   $tomcat_port                = '8095',
   $max_threads                = '150',
   $connection_timeout         = '20000',
@@ -58,6 +59,7 @@ class crowd (
   validate_re($extension, '^(tar\.gz|\.zip)$')
   validate_absolute_path($installdir)
   validate_absolute_path($homedir)
+  validate_absolute_path($logdir)
 
   validate_integer($tomcat_port)
   validate_integer($max_threads)
