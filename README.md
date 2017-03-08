@@ -246,13 +246,13 @@ __`jvm_xms`__
 
 Default:  '256m'
 
-Custom JVM settings for initial memory size.
+Custom JVM settings for initial memory size. Set in `setenv.sh` in `CATALINA_OPTS`.
 
 __`jvm_xmx`__
 
 Default:  '512m'
 
-Custom JVM settings for maximum memory size.
+Custom JVM settings for maximum memory size. Set in `setenv.sh` in `CATALINA_OPTS`.
 
 __`jvm_permgen`__
 
@@ -264,7 +264,7 @@ __`jvm_opts`__
 
 Default:  ''
 
-Any custom JVM options to start Crowd with.
+Any custom JVM options to start Crowd with. Set in `setenv.sh` in `CATALINA_OPTS`.
 
 __`db`__
 
