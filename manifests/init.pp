@@ -97,7 +97,7 @@ class crowd (
 
   if !empty($jvm_opts) { validate_string($jvm_opts) }
 
-  validate_re($db, '^(mysql|postgres)$')
+  validate_re($db, '^(mysql|postgres|mssql)$')
   validate_re($dbuser, '^[a-z_][a-z0-9_-]*[$]?$')
   validate_string($dbpassword)
   validate_string($dbserver)
@@ -105,7 +105,7 @@ class crowd (
   if $dbport { validate_integer($dbport) }
   if $dbdriver { validate_string($dbdriver) }
 
-  validate_re($iddb, '^(mysql|postgres)$')
+  validate_re($iddb, '^(mysql|postgres|mssql)$')
   validate_re($iddbuser, '^[a-z_][a-z0-9_-]*[$]?$')
   validate_string($iddbpassword)
   validate_string($iddbserver)
@@ -151,6 +151,17 @@ class crowd (
       }
       $dbtype = 'postgresql'
     }
+    'mssql': {
+      $_dbport = $dbport ? {
+        undef   => '1433',
+        default => $dbport,
+      }
+      $_dbdriver = $dbdriver ? {
+        undef   => 'net.sourceforge.jtds.jdbc.Driver',
+        default => $dbdriver,
+      }
+      $dbtype = 'mssql'
+    }
     default: {
       warning("db database type ${db} is not supported")
     }
@@ -178,6 +189,17 @@ class crowd (
         default => $iddbdriver,
       }
       $iddbtype = 'postgresql'
+    }
+    'mssql': {
+      $_iddbport = $iddbport ? {
+        undef   => '1433',
+        default => $iddbport,
+      }
+      $_iddbdriver = $iddbdriver ? {
+        undef   => 'net.sourceforge.jtds.jdbc.Driver',
+        default => $iddbdriver,
+      }
+      $iddbtype = 'mssql'
     }
     default: {
       warning("iddb database type ${iddb} is not supported")

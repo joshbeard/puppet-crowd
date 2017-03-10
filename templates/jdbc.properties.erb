@@ -7,6 +7,8 @@ hibernate.max_fetch_depth=1
 hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
 <% elsif scope.lookupvar('crowd::iddb') == 'postgres' -%>
 hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+<% elseif scope.lookupvar('crowd::iddb') == 'mssql' -%>
+hibernate.dialect=com.atlassian.crowd.util.persistence.hibernate.SQLServerIntlDialect
 <% end -%>
 hibernate.show_sql=false
 hibernate.jdbc.batch_size=0

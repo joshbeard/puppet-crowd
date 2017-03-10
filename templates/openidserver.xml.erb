@@ -7,6 +7,8 @@
               url="<%= scope.lookupvar('crowd::iddburl') %>?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8"
               <% if scope.lookupvar('crowd::iddb') == 'mysql' %>
               validationQuery="Select 1"
+	      <% elseif scope.lookupvar('crowd::iddb') == 'mssql' %>
+	      validationQuery="Select 1"
               <% end %>
             />
 
