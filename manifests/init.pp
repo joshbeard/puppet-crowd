@@ -83,11 +83,11 @@ class crowd (
   validate_string($password)
   validate_absolute_path($shell)
 
-  validate_re($download_url, '^((https?|ftps?|puppet?):\/\/\/)(([\da-z\.-]+)\.?([a-z\.]{2,6})([\/\w \.-]*)*\/)??$')
+  validate_re($download_url, '^((https?|ftps?|puppet?):\/\/\/?)(([\da-z\.-]+)\.?([a-z\.]{2,6})([\/\w \.-]*)*\/)??$')
 
   validate_bool($download_driver)
   if $db == 'mysql' {
-    validate_re($mysql_driver, '^((https?|ftps?):\/\/)([\da-z\.-]+)\.?([\da-z\.]{2,6})([\/\w \.\:-]*)*\/?\.jar$')
+    validate_re($mysql_driver, '^((https?|ftps?|puppet?):\/\/\/?)([\da-z\.-]+)\.?([\da-z\.]{2,6})([\/\w \.\:-]*)*\/?\.jar$')
   }
 
   validate_absolute_path($java_home)
