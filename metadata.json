@@ -1,12 +1,12 @@
 {
-  "name": "joshbeard-crowd",
+  "name": "prikkeldraad-crowd",
   "version": "1.0.5",
-  "author": "joshbeard",
+  "author": "prikkeldraad",
   "summary": "Atlassian Crowd Puppet Module",
   "license": "Apache-2.0",
-  "source": "https://github.com/joshbeard/puppet-crowd",
-  "project_page": "https://github.com/joshbeard/puppet-crowd",
-  "issues_url": "https://github.com/joshbeard/puppet-crowd/issues",
+  "source": "https://github.com/prikkeldraad/puppet-crowd",
+  "project_page": "https://github.com/prikkeldraad/puppet-crowd",
+  "issues_url": "https://github.com/prikkeldraad/puppet-crowd/issues",
   "tags": ["atlassian","crowd"],
   "dependencies": [
     {
