@@ -4,7 +4,7 @@
 # Refer to the README for documentation
 #
 class crowd (
-  $version                    = '2.8.4',
+  $version                    = '2.11.1',
   $extension                  = 'tar.gz',
   $product                    = 'crowd',
   $installdir                 = '/opt/crowd',
@@ -53,6 +53,10 @@ class crowd (
   $service_ensure             = 'running',
   $service_enable             = true,
   $service_provider           = undef,
+  $facts_ensure               = 'present',
+  $facter_dir                 = $crowd::params::facter_dir,
+  $create_facter_dir          = true,
+  $stop_command               = $crowd::params::stop_command,
 ) inherits crowd::params {
 
   validate_re($version, '^\d+\.\d+.\d+$')
@@ -79,7 +83,7 @@ class crowd (
   validate_string($password)
   validate_absolute_path($shell)
 
-  validate_re($download_url, '^((https?|ftps?):\/\/)([\da-z\.-]+)\.?([\da-z\.]{2,6})([\/\w \.\:-]*)*\/?$')
+  validate_re($download_url, '^((https?|ftps?|puppet?):\/\/\/)(([\da-z\.-]+)\.?([a-z\.]{2,6})([\/\w \.-]*)*\/)??$')
 
   validate_bool($download_driver)
   if $db == 'mysql' {
@@ -118,6 +122,11 @@ class crowd (
   )
 
   if $service_provider { validate_string($service_provider) }
+
+  validate_re($facts_ensure, '(present|absent)')
+  validate_absolute_path($facter_dir)
+  validate_bool($create_facter_dir)
+  validate_string($stop_command)
 
   case $db {
     'mysql': {
@@ -203,6 +212,7 @@ class crowd (
 
   anchor { 'crowd::begin': }->
   class { 'crowd::install': }->
+  class { 'crowd::facts': }->
   class { 'crowd::config': }~>
   class { 'crowd::service': }->
   anchor { 'crowd::end': }
