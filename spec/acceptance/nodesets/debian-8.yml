@@ -1,0 +1,9 @@
+HOSTS:
+  debian-8:
+    roles:
+      - agent
+    platform: debian-8-amd64
+    hypervisor: vagrant
+    box: puppetlabs/debian-8.2-64-nocm
+CONFIG:
+  type: aio

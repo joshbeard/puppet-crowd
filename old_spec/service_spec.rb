@@ -64,6 +64,7 @@ describe 'crowd::service' do
 
   context 'with custom parameters' do
 
+    let(:facts) { facts }
     describe 'service file and mode' do
       let :pre_condition do
         "class { 'crowd':

@@ -1,0 +1,3 @@
+---
+path: '/bin:/usr/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin'
+staging_http_get: 'curl'

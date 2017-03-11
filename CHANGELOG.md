@@ -1,3 +1,21 @@
+## 2017-03-12 - Release 1.1.0 (PENDING)
+
+### Summary
+
+- Update testing
+  * Add beaker-rspec tests
+  * Update rspec-puppet tests
+  * Update module data (gemfile, rakefile, etc around testing/development)
+- Add LICENSE file
+- Bump default Crowd version to 2.11.1
+- Stop Crowd service on updating
+- Provide `crowd::facts` manifest to provide external fact that reports the
+  installed version. This is used for handling updates.
+- Add `logdir` parameter (PR #16 by @prikkeldraad)
+- Allow IP address in download_url (PR #13 @BenjaminFarley)
+- Allow dots in usernames (PR #9 @cyberious)
+- Use `CATALINA_OPTS` instead of `JAVA_OPTS` in `setenv.sh` (issue #14 @galcorlo)
+
 ## 2016-06-10 - Release 1.0.5
 
 ### Summary

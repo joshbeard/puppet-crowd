@@ -1,2 +1,4 @@
---format documentation
+--format
+s
+--fail-fast
 --color
