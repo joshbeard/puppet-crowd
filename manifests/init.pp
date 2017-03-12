@@ -53,6 +53,10 @@ class crowd (
   $service_ensure             = 'running',
   $service_enable             = true,
   $service_provider           = undef,
+  $facts_ensure               = 'present',
+  $facter_dir                 = $crowd::params::facter_dir,
+  $create_facter_dir          = true,
+  $stop_command               = $crowd::params::stop_command,
 ) inherits crowd::params {
 
   validate_re($version, '^\d+\.\d+.\d+$')
@@ -118,6 +122,11 @@ class crowd (
   )
 
   if $service_provider { validate_string($service_provider) }
+
+  validate_re($facts_ensure, '(present|absent)')
+  validate_absolute_path($facter_dir)
+  validate_bool($create_facter_dir)
+  validate_string($stop_command)
 
   case $db {
     'mysql': {

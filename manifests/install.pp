@@ -5,6 +5,7 @@ class crowd::install {
   $_download_url = regsubst($crowd::download_url, '\/$', '')
   $file = "atlassian-${crowd::product}-${crowd::version}.${crowd::extension}"
   $driver_file = basename($crowd::mysql_driver)
+  $stop_command = $crowd::stop_command
 
   if $crowd::manage_user {
     user { $crowd::user:
@@ -45,6 +46,20 @@ class crowd::install {
     mode   => '0750',
     owner  => $crowd::user,
     group  => $crowd::group,
+  }
+
+  # If the 'crowd_version' fact is defined (as provided by this module),
+  # compare it to the specified version.  If it doesn't match, stop the
+  # crowd service prior to upgrading but after downloading the new version
+  if defined('$::crowd_version') {
+    if versioncmp($::crowd::version, $::crowd_version) > 0 {
+      notify { "Updating Crowd from version ${::crowd_version} to ${::crowd::version}": }
+      exec { $stop_command:
+        path    => $::path,
+        require => Staging::File[$file],
+        before  => Staging::Extract[$file],
+      }
+    }
   }
 
   staging::file { $file:
