@@ -1,22 +1,55 @@
 ---
 sudo: false
 language: ruby
-bundler_args: --without system_tests
-script:
-  - "bundle exec puppet --version"
-  - "bundle exec rake validate"
-  - "bundle exec rake lint"
-  - "bundle exec rake spec SPEC_OPTS='--color --format documentation'"
+before_install:
+  - rm Gemfile.lock || true
+  - gem update bundler
+cache: bundler
+script: bundle exec rake test
 matrix:
   fast_finish: true
   include:
+  - rvm: 2.3.1
+    env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/centos-7
+    script: bundle exec rake beaker
+    services: docker
+    sudo: required
+    bundler_args: --without development
+  - rvm: 2.3.1
+    env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/debian-7
+    script: bundle exec rake beaker
+    services: docker
+    sudo: required
+    bundler_args: --without development
+  - rvm: 2.3.1
+    env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/centos-6
+    script: bundle exec rake beaker
+    services: docker
+    sudo: required
+    bundler_args: --without development
+  - rvm: 2.3.1
+    env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/debian-8
+    script: bundle exec rake beaker
+    services: docker
+    sudo: required
+    bundler_args: --without development
+  - rvm: 2.3.1
+    bundler_args: --without system_tests development
+    env: PUPPET_GEM_VERSION="~> 4.0" STDLIB_LOG_DEPRECATIONS="false" STRICT_VARIABLES=yes
+  - rvm: 2.1.9
+    bundler_args: --without system_tests development
+    env: PUPPET_GEM_VERSION="~> 4.0" STDLIB_LOG_DEPRECATIONS="false" STRICT_VARIABLES=yes
+  - rvm: 2.1.5
+    bundler_args: --without system_tests development
+    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes" STRICT_VARIABLES=yes
+  - rvm: 2.1.5
+    bundler_args: --without system_tests development
+    env: PUPPET_GEM_VERSION="~> 3.0"
   - rvm: 1.9.3
+    bundler_args: --without system_tests development
     env: PUPPET_GEM_VERSION="~> 3.0"
-  - rvm: 2.1.5
-    env: PUPPET_GEM_VERSION="~> 3.0"
-  - rvm: 2.1.5
-    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
-  - rvm: 2.1.6
-    env: PUPPET_GEM_VERSION="~> 4.0" STRICT_VARIABLES="yes"
-notifications:
-  email: false
+  allow_failures:
+  - env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/centos-6
+  - env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/centos-7
+  - env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/debian-7
+  - env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/debian-8

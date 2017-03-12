@@ -1,0 +1,11 @@
+HOSTS:
+  ubuntu-1204:
+    roles:
+      - agent
+    platform: ubuntu-12.04-amd64
+    hypervisor: vagrant
+    box: ubuntu/precise64
+    mount_folders: {}
+CONFIG:
+  nfs_server: none
+  type: aio

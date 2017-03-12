@@ -1,0 +1,9 @@
+HOSTS:
+  debian-7:
+    roles:
+      - agent
+    platform: debian-7-amd64
+    hypervisor: vagrant
+    box: puppetlabs/debian-7.8-64-nocm
+CONFIG:
+  type: aio

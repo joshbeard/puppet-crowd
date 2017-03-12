@@ -87,7 +87,7 @@ class { 'crowd':
 
 __`version`__
 
-Default:  '2.8.4'
+Default:  '2.11.1'
 
 The version of Crowd to download and install.  MAJOR.MINOR.PATCH
 
