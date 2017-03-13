@@ -6,6 +6,9 @@ describe 'crowd::install' do
     context "on #{os}" do
       let(:facts) { facts }
       context 'defaults' do
+        let :pre_condition do
+          "class { 'crowd': }"
+        end
         it { is_expected.to contain_user('crowd').with({
           :home     => '/var/local/crowd',
           :password => '*',
@@ -44,6 +47,21 @@ describe 'crowd::install' do
           :command => 'chown -R crowd:crowd /opt/crowd/atlassian-crowd-2.11.1-standalone',
         })}
       end
+    end
+
+    context 'update crowd' do
+      let(:facts) do
+        facts.merge({
+          :crowd_version => '2.9.0'
+        })
+      end
+      let :pre_condition do
+        "class { 'crowd': version => '2.11.1' }"
+      end
+      it { is_expected.to contain_notify('Updating Crowd from version 2.9.0 to 2.11.1') }
+      it { is_expected.to contain_exec('stop crowd for update').with({
+        :command => 'service crowd stop && sleep 10',
+      })}
     end
 
     context 'custom parameters' do

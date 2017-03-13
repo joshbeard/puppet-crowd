@@ -54,7 +54,8 @@ class crowd::install {
   if defined('$::crowd_version') {
     if versioncmp($::crowd::version, $::crowd_version) > 0 {
       notify { "Updating Crowd from version ${::crowd_version} to ${::crowd::version}": }
-      exec { $stop_command:
+      exec { 'stop crowd for update':
+        command => $stop_command,
         path    => $::path,
         require => Staging::File[$file],
         before  => Staging::Extract[$file],
