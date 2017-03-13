@@ -32,12 +32,6 @@ describe 'crowd' do
                     :content => /^crowd_version=2\.11\.1$/,
                   })
                 end
-
-                it do
-                  is_expected.to contain_file('/etc/puppetlabs/facter/facts.d/crowd_facts.txt').with({
-                    :ensure => 'absent',
-                  })
-                end
               end
             end
 

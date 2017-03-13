@@ -190,6 +190,7 @@ class crowd (
 
   anchor { 'crowd::begin': }->
   class { 'crowd::install': }->
+  class { 'crowd::facts': }->
   class { 'crowd::config': }~>
   class { 'crowd::service': }->
   anchor { 'crowd::end': }

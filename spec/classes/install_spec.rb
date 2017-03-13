@@ -6,10 +6,6 @@ describe 'crowd::install' do
     context "on #{os}" do
       let(:facts) { facts }
       context 'defaults' do
-        let :pre_condition do
-          "class { 'crowd': }"
-        end
-
         it { is_expected.to contain_user('crowd').with({
           :home     => '/var/local/crowd',
           :password => '*',
