@@ -1,4 +1,4 @@
-## 2017-03-12 - Release 1.1.0
+## 2017-03-12 - Release 1.1.0 (PENDING)
 
 ### Summary
 
