@@ -52,4 +52,17 @@ class crowd::params {
     }
   }
 
+  # Where to stick the external fact for reporting the version
+  # Refer to:
+  #   https://docs.puppet.com/facter/3.5/custom_facts.html#fact-locations
+  #   https://github.com/puppetlabs/facter/commit/4bcd6c87cf00609f28be23f6463a3d76d0b6613c
+  if versioncmp($::facterversion, '2.4.2') >= 0 {
+    $facter_dir = '/opt/puppetlabs/facter/facts.d'
+  }
+  else {
+    $facter_dir = '/etc/puppetlabs/facter/facts.d'
+  }
+
+  $stop_command = 'service crowd stop && sleep 10'
+
 }

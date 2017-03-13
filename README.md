@@ -409,6 +409,46 @@ Default: undef
 The provider to use for managing the service.  You probably don't need to set
 this.
 
+__`facts_ensure`__
+
+Default: 'present'
+
+Valid values are 'present' or 'absent'
+
+Will provide an _external fact_ called `crowd_version` with the installed
+Crowd version.
+
+Note: This installs to Facter's system-wide external facts directory (facts.d -
+see the `facter_dir` parameter). A better solution to tracking the installed
+version is needed that can work with a dynamic install path.
+
+__`facter_dir`__
+
+Default: See [bamboo::params](manifests/params.pp)
+
+Absolute path to the external facts directory. Refer to
+[https://docs.puppet.com/facter/latest/custom_facts.html#external-facts](https://docs.puppet.com/facter/3.4/custom_facts.html#external-facts)
+
+__`create_facter_dir`__
+
+Default: true
+
+Boolean
+
+Whether this module should ensure the "facts.d" directory for external facts
+is created.  This module uses an `Exec` resource to do that recursively if
+this is true.
+
+__`stop_command`__
+
+Default: `service crowd stop && sleep 15`
+
+The command to execute prior to upgrading.  This should stop any running
+Crowd instance.  This is executed _after_ downloading the specified version
+and _before_ extracting it to install it.
+
+This requires `crowd::facts_ensure = true`.
+
 ## Development
 
 Please feel free to raise any issues here for bug fixes. We also welcome
