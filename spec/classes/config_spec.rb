@@ -25,7 +25,7 @@ describe 'crowd::config' do
           })}
 
           it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/bin/setenv.sh').with({
-            :content => /JAVA_OPTS="-Xms256m -Xmx512m  -XX:MaxPermSize=256m/,
+            :content => /CATALINA_OPTS="-Xms256m -Xmx512m  -XX:MaxPermSize=256m/,
           })}
 
           it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/bin/setenv.sh').with({
@@ -101,7 +101,7 @@ describe 'crowd::config' do
             end
 
             it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/bin/setenv.sh').with({
-              :content => /JAVA_OPTS="-Xms256m -Xmx512m -Dfoo\.bar -XX:MaxPermSize=256m/,
+              :content => /CATALINA_OPTS="-Xms256m -Xmx512m -Dfoo\.bar -XX:MaxPermSize=256m/,
             })}
           end
 
