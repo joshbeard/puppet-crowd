@@ -18,6 +18,7 @@ class crowd (
   $proxy                      = {},
   $manage_user                = true,
   $manage_group               = true,
+  $manage_home                = false,
   $user                       = 'crowd',
   $group                      = 'crowd',
   $uid                        = undef,
@@ -46,6 +47,7 @@ class crowd (
   $iddbname                   = 'crowdid',
   $iddbport                   = undef,
   $iddbdriver                 = undef,
+  # $iddbvalidationquery        = undef,
   $manage_service             = true,
   $service_file               = $crowd::params::service_file,
   $service_template           = $crowd::params::service_template,
@@ -178,6 +180,7 @@ class crowd (
         default => $iddbdriver,
       }
       $iddbtype = 'mysql'
+      $iddbvalidationquery = "Select 1"
     }
     'postgres': {
       $_iddbport = $iddbport ? {
@@ -189,6 +192,7 @@ class crowd (
         default => $iddbdriver,
       }
       $iddbtype = 'postgresql'
+      $iddbvalidationquery = "Select 1"
     }
     'mssql': {
       $_iddbport = $iddbport ? {
@@ -200,8 +204,10 @@ class crowd (
         default => $iddbdriver,
       }
       $iddbtype = 'mssql'
+      $iddbvalidationquery = "Select 1"
     }
     default: {
+      $iddbvalidationquery = undef
       warning("iddb database type ${iddb} is not supported")
     }
   }

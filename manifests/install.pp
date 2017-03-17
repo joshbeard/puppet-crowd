@@ -16,7 +16,7 @@ class crowd::install {
       password         => $crowd::password,
       password_min_age => '0',
       password_max_age => '99999',
-      managehome       => false,
+      managehome       => $crowd::manage_home,
       uid              => $crowd::uid,
       gid              => $crowd::gid,
     }
