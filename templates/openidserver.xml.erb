@@ -5,8 +5,8 @@
               password="<%= scope.lookupvar('crowd::iddbpassword') %>"
               driverClassName="<%= scope.lookupvar('crowd::_iddbdriver') %>"
               url="<%= scope.lookupvar('crowd::iddburl') %>?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8"
-              <% if scope.lookupvar('crowd::iddb') == 'mysql' %>
-              validationQuery="Select 1"
+              <% if scope.lookupvar('crowd::iddbvalidationquery') != 'undef' %>
+              validationQuery="<% scope.lookupvar('crowd::iddbvalidationquery') %>"
               <% end %>
             />
 

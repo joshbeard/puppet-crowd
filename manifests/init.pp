@@ -46,6 +46,7 @@ class crowd (
   $iddbname                   = 'crowdid',
   $iddbport                   = undef,
   $iddbdriver                 = undef,
+  # $iddbvalidationquery        = undef,
   $manage_service             = true,
   $service_file               = $crowd::params::service_file,
   $service_template           = $crowd::params::service_template,
@@ -83,11 +84,11 @@ class crowd (
   validate_string($password)
   validate_absolute_path($shell)
 
-  validate_re($download_url, '^((https?|ftps?|puppet?):\/\/\/)(([\da-z\.-]+)\.?([a-z\.]{2,6})([\/\w \.-]*)*\/)??$')
+  validate_re($download_url, '^((https?|ftps?|puppet?):\/\/\/?)(([\da-z\.-]+)\.?([a-z\.]{2,6})([\/\w \.-]*)*\/)??$')
 
   validate_bool($download_driver)
   if $db == 'mysql' {
-    validate_re($mysql_driver, '^((https?|ftps?):\/\/)([\da-z\.-]+)\.?([\da-z\.]{2,6})([\/\w \.\:-]*)*\/?\.jar$')
+    validate_re($mysql_driver, '^((https?|ftps?|puppet?):\/\/\/?)([\da-z\.-]+)\.?([\da-z\.]{2,6})([\/\w \.\:-]*)*\/?\.jar$')
   }
 
   validate_absolute_path($java_home)
@@ -97,7 +98,7 @@ class crowd (
 
   if !empty($jvm_opts) { validate_string($jvm_opts) }
 
-  validate_re($db, '^(mysql|postgres)$')
+  validate_re($db, '^(mysql|postgres|mssql)$')
   validate_re($dbuser, '^[a-z_][a-z0-9_-]*[$]?$')
   validate_string($dbpassword)
   validate_string($dbserver)
@@ -105,7 +106,7 @@ class crowd (
   if $dbport { validate_integer($dbport) }
   if $dbdriver { validate_string($dbdriver) }
 
-  validate_re($iddb, '^(mysql|postgres)$')
+  validate_re($iddb, '^(mysql|postgres|mssql)$')
   validate_re($iddbuser, '^[a-z_][a-z0-9_-]*[$]?$')
   validate_string($iddbpassword)
   validate_string($iddbserver)
@@ -151,6 +152,17 @@ class crowd (
       }
       $dbtype = 'postgresql'
     }
+    'mssql': {
+      $_dbport = $dbport ? {
+        undef   => '1433',
+        default => $dbport,
+      }
+      $_dbdriver = $dbdriver ? {
+        undef   => 'net.sourceforge.jtds.jdbc.Driver',
+        default => $dbdriver,
+      }
+      $dbtype = 'mssql'
+    }
     default: {
       warning("db database type ${db} is not supported")
     }
@@ -167,6 +179,7 @@ class crowd (
         default => $iddbdriver,
       }
       $iddbtype = 'mysql'
+      $iddbvalidationquery = "Select 1"
     }
     'postgres': {
       $_iddbport = $iddbport ? {
@@ -178,8 +191,22 @@ class crowd (
         default => $iddbdriver,
       }
       $iddbtype = 'postgresql'
+      $iddbvalidationquery = "Select 1"
+    }
+    'mssql': {
+      $_iddbport = $iddbport ? {
+        undef   => '1433',
+        default => $iddbport,
+      }
+      $_iddbdriver = $iddbdriver ? {
+        undef   => 'net.sourceforge.jtds.jdbc.Driver',
+        default => $iddbdriver,
+      }
+      $iddbtype = 'mssql'
+      $iddbvalidationquery = "Select 1"
     }
     default: {
+      $iddbvalidationquery = undef
       warning("iddb database type ${iddb} is not supported")
     }
   }

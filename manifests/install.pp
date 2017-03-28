@@ -16,7 +16,6 @@ class crowd::install {
       password         => $crowd::password,
       password_min_age => '0',
       password_max_age => '99999',
-      managehome       => false,
       uid              => $crowd::uid,
       gid              => $crowd::gid,
     }
@@ -83,10 +82,15 @@ class crowd::install {
     group  => $crowd::group,
   }
 
+  # symlink all logfiles to logging directory
   file { "${crowd::homedir}/logs":
-    ensure => 'directory',
-    owner  => $crowd::user,
-    group  => $crowd::group,
+    ensure => 'link',
+    target => $crowd::logdir,
+  }
+
+  file { "${crowd::app_dir}/apache-tomcat/logs":
+    ensure => 'link',
+    target => $crowd::logdir,
   }
 
   if $crowd::db == 'mysql' {
