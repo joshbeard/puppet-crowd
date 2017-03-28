@@ -29,7 +29,12 @@ which appears to be dormant.
 
 After installation, you should access Crowd in your browser.  The default
 port is '8095'.  Unfortunately, you'll need to step through the installation
-wizard, providing a license key and some basic configuration.
+wizard, providing a license key and some basic configuration. A (trial) 
+license key can be obtained via the Atlassian website after creating a user
+account.
+
+When upgrading the license key is in the Crowd home directory and you don't
+need to supply it again.
 
 ## Prerequisites
 
@@ -316,7 +321,7 @@ __`iddb`__
 
 Default:  'mysql'
 
-The type of database for the CrowdID database.
+The type of database for the CrowdID database. Either MySQL, PostgreSQL or MSSQL.
 
 See [https://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID](https://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID)
 
