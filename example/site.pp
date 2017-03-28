@@ -1,6 +1,6 @@
 node 'default' {
     # java needs to be installed in /opt/java, 1.8 preferred
-    
+
     # puppet-nginx
     class { 'nginx': }
     nginx::resource::server {'192.168.56.102':
@@ -18,6 +18,5 @@ node 'default' {
         homedir    => '/opt/crowd/crowd-home',
         password   => 'crowd',
         java_home  => '/opt/java',
-       
     }
 }
