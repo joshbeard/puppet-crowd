@@ -179,7 +179,7 @@ class crowd (
         default => $iddbdriver,
       }
       $iddbtype = 'mysql'
-      $iddbvalidationquery = "Select 1"
+      $iddbvalidationquery = 'Select 1'
     }
     'postgres': {
       $_iddbport = $iddbport ? {
@@ -191,7 +191,7 @@ class crowd (
         default => $iddbdriver,
       }
       $iddbtype = 'postgresql'
-      $iddbvalidationquery = "Select 1"
+      $iddbvalidationquery = 'Select 1'
     }
     'mssql': {
       $_iddbport = $iddbport ? {
@@ -203,7 +203,7 @@ class crowd (
         default => $iddbdriver,
       }
       $iddbtype = 'mssql'
-      $iddbvalidationquery = "Select 1"
+      $iddbvalidationquery = 'Select 1'
     }
     default: {
       $iddbvalidationquery = undef
