@@ -18,7 +18,6 @@ class crowd (
   $proxy                      = {},
   $manage_user                = true,
   $manage_group               = true,
-  $manage_home                = false,
   $user                       = 'crowd',
   $group                      = 'crowd',
   $uid                        = undef,
