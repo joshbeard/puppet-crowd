@@ -136,7 +136,7 @@ describe 'crowd::config' do
             it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
               :content => /url="jdbc:postgresql:\/\/localhost:5432\/crowdid/
             })}
-            it { is_expected.not_to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+            it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
               :content => /validationQuery="Select 1"/
             })}
 
@@ -144,6 +144,30 @@ describe 'crowd::config' do
               :content => /hibernate\.dialect=org\.hibernate\.dialect\.PostgreSQLDialect/
             })}
           end
+
+          describe 'mssql' do
+            let :pre_condition do
+              "class { 'crowd':
+                db   => 'mssql',
+                iddb => 'mssql',
+              }"
+            end
+            it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+              :content => /driverClassName="net\.sourceforge\.jtds\.jdbc\.Driver"/
+            })}
+            it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+              :content => /url="jdbc:mssql:\/\/localhost:1433\/crowdid/
+            })}
+            it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/conf/Catalina/localhost/openidserver.xml').with({
+              :content => /validationQuery="Select 1"/
+            })}
+
+            it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/crowd-openidserver-webapp/WEB-INF/classes/jdbc.properties').with({
+              :content => /hibernate\.dialect=com\.atlassian\.crowd\.util\.persistence\.hibernate\.SQLServerIntlDialect/
+            })}
+
+          end
+
         end
     end
   end

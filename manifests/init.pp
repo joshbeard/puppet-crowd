@@ -47,6 +47,7 @@ class crowd (
   $iddbport                   = undef,
   $iddbdriver                 = undef,
   # $iddbvalidationquery        = undef,
+  # $iddbhybernatedialect       = undef,
   $manage_service             = true,
   $service_file               = $crowd::params::service_file,
   $service_template           = $crowd::params::service_template,
@@ -180,6 +181,7 @@ class crowd (
       }
       $iddbtype = 'mysql'
       $iddbvalidationquery = 'Select 1'
+      $iddbhybernatedialect = 'org.hibernate.dialect.MySQL5InnoDBDialect'
     }
     'postgres': {
       $_iddbport = $iddbport ? {
@@ -192,6 +194,7 @@ class crowd (
       }
       $iddbtype = 'postgresql'
       $iddbvalidationquery = 'Select 1'
+      $iddbhybernatedialect = 'org.hibernate.dialect.PostgreSQLDialect'
     }
     'mssql': {
       $_iddbport = $iddbport ? {
@@ -204,9 +207,10 @@ class crowd (
       }
       $iddbtype = 'mssql'
       $iddbvalidationquery = 'Select 1'
+      $iddbhybernatedialect = 'com.atlassian.crowd.util.persistence.hibernate.SQLServerIntlDialect'
     }
     default: {
-      $iddbvalidationquery = undef
+      $iddbvalidationquery = 'Select 1'
       warning("iddb database type ${iddb} is not supported")
     }
   }

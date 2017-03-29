@@ -3,13 +3,7 @@
 # Any changes made here will be lost.
 ##################################################
 hibernate.max_fetch_depth=1
-<% if scope.lookupvar('crowd::iddb') == 'mysql' -%>
-hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
-<% elsif scope.lookupvar('crowd::iddb') == 'postgres' -%>
-hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-<% elseif scope.lookupvar('crowd::iddb') == 'mssql' -%>
-hibernate.dialect=com.atlassian.crowd.util.persistence.hibernate.SQLServerIntlDialect
-<% end -%>
+hibernate.dialect=<%= scope.lookupvar('crowd::iddbhybernatedialect') %>
 hibernate.show_sql=false
 hibernate.jdbc.batch_size=0
 hibernate.transaction.factory_class=org.hibernate.transaction.JDBCTransactionFactory
