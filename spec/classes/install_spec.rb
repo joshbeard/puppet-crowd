@@ -46,6 +46,13 @@ describe 'crowd::install' do
         it { is_expected.to contain_exec('chown_/opt/crowd/atlassian-crowd-2.11.1-standalone').with({
           :command => 'chown -R crowd:crowd /opt/crowd/atlassian-crowd-2.11.1-standalone',
         })}
+
+        it { is_expected.to contain_file('/var/log/crowd') }
+        it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/logs').with({
+          'ensure' => 'link',
+          'target' => '/var/log/crowd'
+        })}
+
       end
     end
 
