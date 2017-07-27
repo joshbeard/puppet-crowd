@@ -66,6 +66,8 @@ class crowd::install {
   staging::file { $file:
     source  => "${_download_url}/${file}",
     require => File[$crowd::app_dir],
+    owner   => $crowd::user,
+    group   => $crowd::group,
   }
 
   staging::extract { $file:
