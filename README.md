@@ -29,7 +29,12 @@ which appears to be dormant.
 
 After installation, you should access Crowd in your browser.  The default
 port is '8095'.  Unfortunately, you'll need to step through the installation
-wizard, providing a license key and some basic configuration.
+wizard, providing a license key and some basic configuration. A (trial) 
+license key can be obtained via the Atlassian website after creating a user
+account.
+
+When upgrading the license key is in the Crowd home directory and you don't
+need to supply it again.
 
 ## Prerequisites
 
@@ -270,7 +275,7 @@ __`db`__
 
 Default:  'mysql'
 
-The database type to use.  The module supports either `mysql` or `postgres`
+The database type to use.  The module supports either `mysql`, `postgres` or `mssql`
 
 __`dbuser`__
 
@@ -300,22 +305,23 @@ __`dbport`__
 
 Default: undef
 
-The port for accessing the database server.  Defaults to '5432' for Postgres
-and '3306' for MySQL.
+The port for accessing the database server.  Defaults to '5432' for Postgres,
+'3306' for MySQL and '1433' for MSSQL.
 
 __`dbdriver`__
 
 Default: undef
 
 Defaults to `com.mysql.jdbc.Driver` when `db` is set to `mysql` and
-`org.postgresql.Driver` when `db` is set to `postgres`
+`org.postgresql.Driver` when `db` is set to `postgres`. For MSSQL it defaults
+to the JTDS driver that is supplied by Crowd.
 
 
 __`iddb`__
 
 Default:  'mysql'
 
-The type of database for the CrowdID database.
+The type of database for the CrowdID database. Either MySQL, PostgreSQL or MSSQL.
 
 See [https://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID](https://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID)
 
@@ -348,14 +354,15 @@ __`iddbport`__
 Default: undef
 
 The port for accessing the CrowdID database server.  Defaults to '5432' for Postgres
-and '3306' for MySQL.
+and '3306' for MySQL. Defaults to '1433' when using MSSQL.
 
 __`iddbdriver`__
 
 Default: undef
 
 Defaults to `com.mysql.jdbc.Driver` when `db` is set to `mysql` and
-`org.postgresql.Driver` when `db` is set to `postgres`
+`org.postgresql.Driver` when `db` is set to `postgres`. For MSSQL it defaults
+to the JTDS driver that is shipped with Crowd.
 
 __`manage_service`__
 

@@ -46,6 +46,13 @@ describe 'crowd::install' do
         it { is_expected.to contain_exec('chown_/opt/crowd/atlassian-crowd-2.11.1-standalone').with({
           :command => 'chown -R crowd:crowd /opt/crowd/atlassian-crowd-2.11.1-standalone',
         })}
+
+        it { is_expected.to contain_file('/var/log/crowd') }
+        it { is_expected.to contain_file('/opt/crowd/atlassian-crowd-2.11.1-standalone/apache-tomcat/logs').with({
+          'ensure' => 'link',
+          'target' => '/var/log/crowd'
+        })}
+
       end
     end
 
@@ -126,33 +133,33 @@ describe 'crowd::install' do
       describe 'mysql_driver using ip and port' do
         let :pre_condition do
           "class { 'crowd':
-            mysql_driver => 'http://192.168.0.0.1:8080/mysql-connector-java.jar',
+            mysql_driver => 'http://169.254.0.0/mysql-connector-java.jar',
           }"
         end
         it { is_expected.to contain_staging__file('jdbc driver').with({
-          :source => 'http://192.168.0.0.1:8080/mysql-connector-java.jar',
+          :source => 'http://169.254.0.0/mysql-connector-java.jar',
         })}
       end
 
       describe 'download_url using dns' do
         let :pre_condition do
           "class { 'crowd':
-            download_url => 'http://192.168.0.0.1:8080/',
+            download_url => 'http://mirror.foo.com/',
           }"
         end
         it { is_expected.to contain_staging__file('atlassian-crowd-2.11.1.tar.gz').with({
-          :source => 'http://192.168.0.0.1:8080/atlassian-crowd-2.11.1.tar.gz',
+          :source => 'http://mirror.foo.com/atlassian-crowd-2.11.1.tar.gz',
         })}
       end
 
       describe 'download_url from ip and port' do
         let :pre_condition do
           "class { 'crowd':
-            download_url => 'http://192.168.0.0.1:8080/',
+            download_url => 'http://169.254.0.0/',
           }"
         end
         it { is_expected.to contain_staging__file('atlassian-crowd-2.11.1.tar.gz').with({
-          :source => 'http://192.168.0.0.1:8080/atlassian-crowd-2.11.1.tar.gz',
+          :source => 'http://169.254.0.0/atlassian-crowd-2.11.1.tar.gz',
         })}
       end
 
