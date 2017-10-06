@@ -34,7 +34,7 @@ class crowd::params {
         }
       }
       else {
-        $service_file     = '/usr/lib/systemd/system/crowd.service'
+        $service_file     = '/lib/systemd/system/crowd.service'
         $service_template = 'crowd/crowd.service.erb'
         $service_mode     = '0644'
       }
