@@ -1,4 +1,10 @@
-## 2019-04-23 - Release 1.1.0
+## 2019-04-23 - Release 1.1.1
+
+### Summary
+
+- Bump default Crowd version to 3.0.1
+
+## 2017-03-12 - Release 1.1.0
 
 ### Summary
 
