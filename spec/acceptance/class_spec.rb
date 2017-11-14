@@ -70,7 +70,7 @@ describe 'crowd class' do
         class { 'crowd':
           java_home    => $java_home,
           download_url => $download_url,
-          version      => '2.11.1',
+          version      => '3.0.1',
         }
       EOS
 

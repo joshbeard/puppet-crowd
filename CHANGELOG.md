@@ -1,3 +1,5 @@
+## 2017-11-14 - Testing
+- Bump default Crowd version to 3.0.1
 ## 2017-03-12 - Release 1.1.0 (PENDING)
 
 ### Summary
