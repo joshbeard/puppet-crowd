@@ -1,0 +1,55 @@
+# LOGGING LEVELS
+# To turn more verbose logging on - "WARN", "DEBUG", "FATAL", "INFO"
+log4j.rootLogger=WARN, console, filelog
+
+#####################################################
+# LOG FILE LOCATIONS
+#####################################################
+
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.Target=System.out
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d %t %p [%c{4}] %m%n
+
+log4j.appender.filelog=org.apache.log4j.RollingFileAppender
+log4j.appender.filelog.File=<%= scope.lookupvar('crowd::logdir') %>/atlassian-crowd-openid-server.log
+log4j.appender.filelog.MaxFileSize=20480KB
+log4j.appender.filelog.MaxBackupIndex=5
+log4j.appender.filelog.layout=org.apache.log4j.PatternLayout
+log4j.appender.filelog.layout.ConversionPattern=%d %t %p [%c{4}] %m%n
+
+#####################################################
+# CROWD - CLASS-SPECIFIC LOGGING LEVELS
+#####################################################
+
+log4j.logger.com.atlassian.crowd.openid.spray=INFO
+
+log4j.logger.com.atlassian.crowd.openid=INFO
+
+log4j.logger.com.atlassian.crowd=INFO
+
+#####################################################
+# LIBRARY - CLASS-SPECIFIC LOGGING LEVELS
+#####################################################
+
+log4j.logger.spray=WARN
+
+log4j.logger.akka=WARN
+
+log4j.logger.com.opensymphony=WARN
+
+log4j.logger.com.opensymphony.xwork2.util.OgnlUtil=ERROR
+
+log4j.logger.org.apache.commons=WARN
+
+log4j.logger.org.codehaus.=WARN
+
+log4j.logger.org.codehaus.xfire=WARN
+
+log4j.logger.org.hibernate=WARN
+
+log4j.logger.org.springframework=WARN
+
+log4j.logger.org.xbean=WARN
+
+log4j.logger.webwork=WARN
