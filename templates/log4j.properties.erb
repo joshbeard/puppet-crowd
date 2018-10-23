@@ -1,0 +1,81 @@
+# LOGGING LEVELS
+# To turn more verbose logging on - "WARN", "DEBUG", "FATAL", "INFO"
+log4j.rootLogger=INFO, console, crowdlog
+
+#####################################################
+# LOG FILE LOCATIONS
+#####################################################
+
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.Target=System.out
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d %t %p [%c{4}] %m%n
+
+
+log4j.appender.crowdlog=org.apache.log4j.RollingFileAppender
+log4j.appender.crowdlog.File=<%= scope.lookupvar('crowd::logdir') %>/atlassian-crowd.log
+
+#log4j.appender.crowdlog=com.atlassian.crowd.console.logging.CrowdHomeLogAppender
+log4j.appender.crowdlog.MaxFileSize=20480KB
+log4j.appender.crowdlog.MaxBackupIndex=5
+log4j.appender.crowdlog.layout=org.apache.log4j.PatternLayout
+log4j.appender.crowdlog.layout.ConversionPattern=%d %t %p [%c{4}] %m%n
+
+#####################################################
+# CROWD - CLASS-SPECIFIC LOGGING LEVELS
+#####################################################
+
+log4j.logger.atlassian.plugin=INFO
+
+log4j.logger.com.atlassian.license=ERROR
+
+log4j.logger.com.atlassian.plugin=INFO
+
+log4j.logger.com.atlassian.crowd=INFO
+log4j.logger.com.atlassian.crowd.license=ERROR
+
+# Set to DEBUG for HTTP request info
+log4j.logger.com.atlassian.crowd.plugin.web.filter.HttpRequestLoggingFilter=INFO
+
+# Set to DEBUG for authorization info
+log4j.logger.com.atlassian.crowd.manager.application.ApplicationServiceGeneric=INFO
+
+log4j.logger.com.atlassian.crowd.directory.SpringLDAPConnector=INFO
+
+# Set the following lines to DEBUG to enable logging on incoming, outgoing and fault SOAP messages
+log4j.logger.com.atlassian.crowd.service.soap.xfire.XFireInLoggingMethodHandler=WARN
+log4j.logger.com.atlassian.crowd.service.soap.xfire.XFireOutLoggingMethodHandler=WARN
+log4j.logger.com.atlassian.crowd.service.soap.xfire.XFireFaultLoggingMethodHandler=WARN
+
+# Bootstrap information on Crowd - Leave as 'INFO'.
+log4j.logger.com.atlassian.crowd.startup=INFO
+
+# set to DEBUG to output each individual batch entry to the log file
+# log4j.logger.com.atlassian.crowd.util.persistence.hibernate.batch.AbstractBatchProcessor=DEBUG
+
+#####################################################
+# LIBRARY - CLASS-SPECIFIC LOGGING LEVELS
+#####################################################
+
+log4j.logger.com.atlassian.util.profiling.UtilTimerStack=DEBUG
+
+log4j.logger.com.opensymphony=WARN
+
+log4j.logger.com.opensymphony.xwork2.util.OgnlUtil=ERROR
+
+log4j.logger.com.sun.jersey.core.spi.component.ProviderServices=WARN
+
+log4j.logger.org.apache.commons=WARN
+
+log4j.logger.org.codehaus=WARN
+
+log4j.logger.org.codehaus.xfire=WARN
+
+log4j.logger.org.hibernate=WARN
+log4j.logger.org.hibernate.orm.deprecation=ERROR
+
+log4j.logger.org.springframework=WARN
+
+log4j.logger.org.xbean=WARN
+
+log4j.logger.webwork=WARN

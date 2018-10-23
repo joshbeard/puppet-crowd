@@ -50,4 +50,27 @@ class crowd::config {
     group   => $crowd::group,
   }
 
+  file { "${crowd::app_dir}/apache-tomcat/conf/logging.properties":
+    content => template('crowd/logging.properties.erb'),
+    owner   => $crowd::user,
+    group   => $crowd::group,
+  }
+
+  file { "${crowd::app_dir}/crowd-webapp/WEB-INF/classes/log4j.properties":
+    content => template('crowd/log4j.properties.erb'),
+    owner   => $crowd::user,
+    group   => $crowd::group,
+  }
+
+  file { "${crowd::app_dir}/crowd-openidserver-webapp/WEB-INF/classes/log4j.properties":
+    content => template('crowd/openidserver-log4j.properties.erb'),
+    owner   => $crowd::user,
+    group   => $crowd::group,
+  }
+
+  file { "${crowd::app_dir}/apache-tomcat/conf/server.xml":
+    content => template('crowd/server.xml.erb'),
+    owner   => $crowd::user,
+    group   => $crowd::group,
+  }
 }

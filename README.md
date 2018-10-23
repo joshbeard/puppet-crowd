@@ -266,6 +266,13 @@ Default:  ''
 
 Any custom JVM options to start Crowd with. Set in `setenv.sh` in `CATALINA_OPTS`.
 
+__`logdir`__
+
+Default:  '`/var/log/crowdir`'
+
+Set the folder to store log files in.
+
+
 __`db`__
 
 Default:  'mysql'
