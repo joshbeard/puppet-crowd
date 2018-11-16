@@ -18,6 +18,12 @@ class crowd::config {
     $_changes = $changes
   }
 
+  file { "${crowd::app_dir}/apache-tomcat/conf/server.xml":
+    content => template('crowd/server.xml.erb'),
+    owner   => $crowd::user,
+    group   => $crowd::group,
+  }
+  
   augeas { "${crowd::app_dir}/apache-tomcat/conf/server.xml":
     lens    => 'Xml.lns',
     incl    => "${crowd::app_dir}/apache-tomcat/conf/server.xml",
@@ -68,9 +74,5 @@ class crowd::config {
     group   => $crowd::group,
   }
 
-  file { "${crowd::app_dir}/apache-tomcat/conf/server.xml":
-    content => template('crowd/server.xml.erb'),
-    owner   => $crowd::user,
-    group   => $crowd::group,
-  }
+
 }
