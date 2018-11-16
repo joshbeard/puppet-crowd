@@ -24,7 +24,6 @@ class crowd::config {
     group   => $crowd::group,
   }
   ->
-  
   augeas { "${crowd::app_dir}/apache-tomcat/conf/server.xml":
     lens    => 'Xml.lns',
     incl    => "${crowd::app_dir}/apache-tomcat/conf/server.xml",
