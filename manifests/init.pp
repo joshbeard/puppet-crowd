@@ -57,6 +57,7 @@ class crowd (
   $facter_dir                 = $crowd::params::facter_dir,
   $create_facter_dir          = true,
   $stop_command               = $crowd::params::stop_command,
+  $internet_proxy             = undef,
 ) inherits crowd::params {
 
   validate_re($version, '^\d+\.\d+.\d+$')

@@ -57,26 +57,24 @@ class crowd::install {
       exec { 'stop crowd for update':
         command => $stop_command,
         path    => $::path,
-        require => Staging::File[$file],
-        before  => Staging::Extract[$file],
+        require => Archive[$file],
+        before  => Archive[$file],
       }
     }
   }
 
-  staging::file { $file:
-    source  => "${_download_url}/${file}",
-    require => File[$crowd::app_dir],
-    owner   => $crowd::user,
-    group   => $crowd::group,
-  }
-
-  staging::extract { $file:
-    target  => $crowd::app_dir,
-    creates => "${crowd::app_dir}/apache-tomcat",
-    strip   => 1,
-    user    => $crowd::user,
-    group   => $crowd::group,
-    require => Staging::File[$file],
+  archive { $file:
+    source         => "${_download_url}/${file}",
+    path           => "/tmp/$file",
+    extract        => true,
+    extract_path   => $crowd::installdir,
+    cleanup        => true,
+    proxy_server   => $crowd::internet_proxy,
+    allow_insecure => true,
+    creates        => "${crowd::app_dir}/apache-tomcat",
+    user           => $crowd::user,
+    group          => $crowd::group,
+    require        => File[$crowd::app_dir],
   }
 
   file { $crowd::logdir:
@@ -93,10 +91,13 @@ class crowd::install {
 
   if $crowd::db == 'mysql' {
     if $crowd::download_driver {
-      staging::file { 'jdbc driver':
-        source => $crowd::mysql_driver,
-        target => "${crowd::app_dir}/apache-tomcat/lib/${driver_file}",
-        before => Exec["chown_${crowd::app_dir}"],
+      archive { 'jdbc driver':
+        source       => $crowd::mysql_driver,
+        path         => "${crowd::app_dir}/apache-tomcat/lib/${driver_file}",
+        extract      => false,
+        cleanup      => false
+        proxy_server => $crowd::internet_proxy,
+        before       => Exec["chown_${crowd::app_dir}"],
       }
     }
   }
@@ -106,7 +107,7 @@ class crowd::install {
     unless    => "find ${crowd::app_dir} ! -type l \\( ! -user ${crowd::user} -type f \\) -o \\( ! -group ${crowd::group} \\) -a \\( -type f \\)| wc -l | awk '{print \$1}' | grep -qE '^0'",
     path      => '/bin:/usr/bin',
     subscribe => User[$crowd::user],
-    require   => Staging::Extract[$file],
+    require   => Archive[$file],
   }
 
 }
