@@ -67,7 +67,7 @@ class crowd::install {
     source         => "${_download_url}/${file}",
     path           => "/tmp/$file",
     extract        => true,
-    extract_path   => $crowd::installdir,
+    extract_path   => $crowd::app_dir,
     cleanup        => true,
     proxy_server   => $crowd::internet_proxy,
     allow_insecure => true,
