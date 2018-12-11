@@ -64,17 +64,18 @@ class crowd::install {
   }
 
   archive { $file:
-    source         => "${_download_url}/${file}",
-    path           => "/tmp/$file",
-    extract        => true,
-    extract_path   => $crowd::app_dir,
-    cleanup        => true,
-    proxy_server   => $crowd::internet_proxy,
-    allow_insecure => true,
-    creates        => "${crowd::app_dir}/apache-tomcat",
-    user           => $crowd::user,
-    group          => $crowd::group,
-    require        => File[$crowd::app_dir],
+    source          => "${_download_url}/${file}",
+    path            => "/tmp/$file",
+    extract         => true,
+    extract_command => 'tar xzf %s --strip-components=1',
+    extract_path    => $crowd::app_dir,
+    cleanup         => true,
+    proxy_server    => $crowd::internet_proxy,
+    allow_insecure  => true,
+    creates         => "${crowd::app_dir}/apache-tomcat",
+    user            => $crowd::user,
+    group           => $crowd::group,
+    require         => File[$crowd::app_dir],
   }
 
   file { $crowd::logdir:
