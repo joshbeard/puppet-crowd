@@ -95,7 +95,7 @@ class crowd::install {
         source       => $crowd::mysql_driver,
         path         => "${crowd::app_dir}/apache-tomcat/lib/${driver_file}",
         extract      => false,
-        cleanup      => false
+        cleanup      => false,
         proxy_server => $crowd::internet_proxy,
         before       => Exec["chown_${crowd::app_dir}"],
       }
