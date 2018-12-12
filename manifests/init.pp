@@ -1,4 +1,3 @@
-
 # == Class: crowd
 #
 # Refer to the README for documentation
@@ -8,6 +7,7 @@ class crowd (
   $extension                  = 'tar.gz',
   $product                    = 'crowd',
   $installdir                 = '/opt/crowd',
+  $appdir                     = "atlassian-${product}-${version}-standalone",
   $homedir                    = '/var/local/crowd',
   $logdir                     = '/var/log/crowd',
   $tomcat_port                = '8095',
@@ -207,7 +207,7 @@ class crowd (
     }
   }
 
-  $app_dir = "${installdir}/atlassian-${product}-${version}-standalone"
+  $app_dir = "${installdir}/${appdir}"
   $dburl   = "jdbc:${dbtype}://${dbserver}:${_dbport}/${dbname}"
   $iddburl = "jdbc:${iddbtype}://${iddbserver}:${_iddbport}/${iddbname}"
 
