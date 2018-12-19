@@ -36,7 +36,7 @@ wizard, providing a license key and some basic configuration.
 Current dependencies are:
 
  * puppetlabs/stdlib
- * puppet/staging
+ * puppet/archive
 
 A Java installation is also required.
 [puppetlabs/java](https://forge.puppetlabs.com/puppetlabs/java) is recommended.
@@ -112,7 +112,20 @@ Default:  '/opt/crowd'
 
 The absolute base path to install Crowd to.  Within this path, Crowd will be
 installed to a sub-directory that matches the version.  Something like
-`atlassian-crowd-2.8.3-standalone`
+`atlassian-crowd-2.8.3-standalone`.  You can override this sub-directory by
+setting the 'appdir' parameter
+
+__`appdir`__
+
+Default: atlassian-${product}-${version}-standalone
+
+The sub-directory under installdir to install Crowd to.
+
+__`internet_proxy`__
+
+Default: undef
+
+Proxy setting to use if downloading Crowd behind a proxy.
 
 __`homedir`__
 
@@ -270,7 +283,7 @@ __`db`__
 
 Default:  'mysql'
 
-The database type to use.  The module supports either `mysql` or `postgres`
+The database type to use.  The module supports either `mysql`, `postgres`, or `oracle`.
 
 __`dbuser`__
 
@@ -308,8 +321,8 @@ __`dbdriver`__
 Default: undef
 
 Defaults to `com.mysql.jdbc.Driver` when `db` is set to `mysql` and
-`org.postgresql.Driver` when `db` is set to `postgres`
-
+`org.postgresql.Driver` when `db` is set to `postgres` and
+`oracle.jdbc.driver.OracleDriver` when `db is set to `oracle`.
 
 __`iddb`__
 
