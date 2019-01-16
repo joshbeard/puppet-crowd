@@ -1,4 +1,3 @@
-
 # == Class: crowd
 #
 # Refer to the README for documentation
@@ -8,6 +7,7 @@ class crowd (
   $extension                  = 'tar.gz',
   $product                    = 'crowd',
   $installdir                 = '/opt/crowd',
+  $appdir                     = "atlassian-${product}-${version}-standalone",
   $homedir                    = '/var/local/crowd',
   $logdir                     = '/var/log/crowd',
   $tomcat_port                = '8095',
@@ -57,6 +57,7 @@ class crowd (
   $facter_dir                 = $crowd::params::facter_dir,
   $create_facter_dir          = true,
   $stop_command               = $crowd::params::stop_command,
+  $internet_proxy             = undef,
 ) inherits crowd::params {
 
   validate_re($version, '^\d+\.\d+.\d+$')
@@ -97,7 +98,7 @@ class crowd (
 
   if !empty($jvm_opts) { validate_string($jvm_opts) }
 
-  validate_re($db, '^(mysql|postgres)$')
+  validate_re($db, '^(mysql|postgres|oracle)$')
   validate_re($dbuser, '^[a-z_][a-z0-9_-]*[$]?$')
   validate_string($dbpassword)
   validate_string($dbserver)
@@ -105,7 +106,7 @@ class crowd (
   if $dbport { validate_integer($dbport) }
   if $dbdriver { validate_string($dbdriver) }
 
-  validate_re($iddb, '^(mysql|postgres)$')
+  validate_re($iddb, '^(mysql|postgres|oracle)$')
   validate_re($iddbuser, '^[a-z_][a-z0-9_-]*[$]?$')
   validate_string($iddbpassword)
   validate_string($iddbserver)
@@ -151,6 +152,17 @@ class crowd (
       }
       $dbtype = 'postgresql'
     }
+    'oracle': {
+      $_dbport = $dbport ? {
+        undef   => '1521',
+        default => $dbport,
+      }
+      $_dbdriver = $dbdriver ? {
+        undef   => 'oracle.jdbc.driver.OracleDriver',
+        default => $dbdriver,
+      }
+      $dbtype = 'oracle'
+    }
     default: {
       warning("db database type ${db} is not supported")
     }
@@ -179,12 +191,23 @@ class crowd (
       }
       $iddbtype = 'postgresql'
     }
+    'oracle': {
+      $_iddbport = $iddbport ? {
+        undef   => '1521',
+        default => $iddbport,
+      }
+      $_iddbdriver = $iddbdriver ? {
+        undef   => 'oracle.jdbc.driver.OracleDriver',
+        default => $iddbdriver,
+      }
+      $iddbtype = 'oracle'
+    }
     default: {
       warning("iddb database type ${iddb} is not supported")
     }
   }
 
-  $app_dir = "${installdir}/atlassian-${product}-${version}-standalone"
+  $app_dir = "${installdir}/${appdir}"
   $dburl   = "jdbc:${dbtype}://${dbserver}:${_dbport}/${dbname}"
   $iddburl = "jdbc:${iddbtype}://${iddbserver}:${_iddbport}/${iddbname}"
 
