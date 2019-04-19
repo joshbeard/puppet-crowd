@@ -9,13 +9,6 @@ class crowd (
   $installdir                 = '/opt/crowd',
   $appdir                     = "atlassian-${product}-${version}-standalone",
   $homedir                    = '/var/local/crowd',
-  $logdir                     = '/var/log/crowd',
-  $tomcat_port                = '8095',
-  $max_threads                = '150',
-  $connection_timeout         = '20000',
-  $accept_count               = '100',
-  $min_spare_threads          = '25',
-  $proxy                      = {},
   $manage_user                = true,
   $manage_group               = true,
   $user                       = 'crowd',
@@ -24,6 +17,19 @@ class crowd (
   $gid                        = undef,
   $shell                      = $crowd::params::shell,
   $password                   = '*',
+  $manage_logging             = false,
+  $log_dir                    = undef,
+  $manage_log_dir             = false,
+  $log_dir_owner              = $user,
+  $log_dir_group              = $group,
+  $log_dir_mode               = '0750',
+  $log_max_days               = '5',
+  $tomcat_port                = '8095',
+  $max_threads                = '150',
+  $connection_timeout         = '20000',
+  $accept_count               = '100',
+  $min_spare_threads          = '25',
+  $proxy                      = {},
   $download_driver            = true,
   $mysql_driver               = 'http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar',
   $download_url               = 'https://www.atlassian.com/software/crowd/downloads/binary/',
@@ -60,11 +66,21 @@ class crowd (
   $internet_proxy             = undef,
 ) inherits crowd::params {
 
+  $_user_group_regex = '^[a-z_][a-z\.0-9_-]*[$]?$'
   validate_re($version, '^\d+\.\d+.\d+$')
   validate_re($extension, '^(tar\.gz|\.zip)$')
   validate_absolute_path($installdir)
   validate_absolute_path($homedir)
-  validate_absolute_path($logdir)
+  validate_bool($manage_logging)
+
+  if $manage_logging {
+    validate_bool($manage_log_dir)
+    validate_absolute_path($log_dir)
+    validate_re($log_dir_owner, $_user_group_regex)
+    validate_re($log_dir_group, $_user_group_regex)
+    validate_string($log_dir_mode)
+    validate_re($log_max_days, '^\d+$')
+  }
 
   validate_integer($tomcat_port)
   validate_integer($max_threads)
@@ -74,7 +90,6 @@ class crowd (
   validate_hash($proxy)
   validate_bool($manage_user)
   validate_bool($manage_group)
-  $_user_group_regex = '^[a-z_][a-z\.0-9_-]*[$]?$'
   validate_re($user, $_user_group_regex)
   validate_re($group, $_user_group_regex)
 

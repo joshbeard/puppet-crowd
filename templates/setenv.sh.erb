@@ -7,9 +7,11 @@ JAVA_HOME="<%= scope.lookupvar('crowd::java_home') %>"
 CATALINA_OPTS="-Xms<%= scope.lookupvar('crowd::jvm_xms') %> -Xmx<%= scope.lookupvar('crowd::jvm_xmx') %> <%= scope.lookupvar('crowd::jvm_opts') %> -XX:MaxPermSize=<%= scope.lookupvar('crowd::jvm_permgen') %> -Dfile.encoding=UTF-8 $CATALINA_OPTS"
 
 CATALINA_PID="<%= scope.lookupvar('crowd::app_dir') %>/apache-tomcat/work/crowd.pid"
-CATALINA_OUT="<%= scope.lookupvar('crowd::logdir') %>/catalina.out"
+<%- if scope.lookupvar('crowd::manage_logging') == true -%>
+CATALINA_OUT="<%= scope.lookupvar('crowd::log_dir') %>/catalina.out"
+export CATALINA_OUT
+<%- end -%>
 
 export JAVA_HOME
 export CATALINA_OPTS
 export CATALINA_PID
-export CATALINA_OUT

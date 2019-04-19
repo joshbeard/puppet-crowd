@@ -78,10 +78,13 @@ class crowd::install {
     require         => File[$crowd::app_dir],
   }
 
-  file { $crowd::logdir:
-    ensure => 'directory',
-    owner  => $crowd::user,
-    group  => $crowd::group,
+  if $crowd::manage_log_dir {
+    file { $crowd::log_dir:
+      ensure => 'directory',
+      owner  => $crowd::log_dir_owner,
+      group  => $crowd::log_dir_group,
+      mode   => $crowd::log_dir_mode,
+    }
   }
 
   file { "${crowd::homedir}/logs":

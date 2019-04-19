@@ -3,14 +3,17 @@
 [![Puppet Forge](http://img.shields.io/puppetforge/v/joshbeard/crowd.svg)](https://forge.puppetlabs.com/joshbeard/crowd)
 [![Build Status](https://travis-ci.org/joshbeard/puppet-crowd.png?branch=master)](https://travis-ci.org/joshbeard/puppet-crowd)
 
-1. [Overview](#overview)
-2. [Prerequisites](#prerequisites)
-3. [Usage](#usage)
-    * [Defaults](#defaults)
-    * [Examples](#examples)
-4. [Reference](#reference)
-5. [Development](#development)
-6. [Authors and Contributors](#authors-and-contributors)
+- [puppet-crowd](#puppet-crowd)
+  - [Overview](#overview)
+  - [Prerequisites](#prerequisites)
+  - [Usage](#usage)
+    - [Examples](#examples)
+  - [Reference](#reference)
+    - [Class: `crowd`](#class-crowd)
+      - [Parameters](#parameters)
+  - [Development](#development)
+    - [How to test the Crowd module](#how-to-test-the-crowd-module)
+  - [Authors and Contributors](#authors-and-contributors)
 
 ## Overview
 
@@ -132,6 +135,49 @@ __`homedir`__
 Default:  '/var/local/crowd'
 
 The home directory for the crowd user.
+
+__`manage_logging`__
+
+Default: false
+
+If true, the module will manage the access log valve in the Crowd server's Tomcat server.xml, properties in `conf/logging.properties`,
+properties in `crowd-webapp/WEB-INF/classes/log4j.properties`, and properties in `crowd-openidserver-webapp/WEB-INF/classes/log4j.properties`.
+
+__`log_dir`__
+
+Default: undef
+
+If `manage_logging` is true, this should specify the absolute path to the log directory (e.g. `/var/log/crowd`).
+
+__`manage_log_dir`__
+
+Default: false
+
+If `manage_logging` is true, this will manage the log directory via a `file` resource.
+
+__`log_dir_owner`__
+
+Default: `$user`
+
+If `manage_log_dir` is true, this specifies the owner for the file resource.
+
+__`log_dir_group`__
+
+Default: `$group`
+
+If `manage_log_dir` is true, this specifies the group for the file resource.
+
+__`log_dir_mode`__
+
+Default: `0750`
+
+If `manage_log_dir` is true, this specifies the mode for the file resource.
+
+__`log_max_days`__
+
+Default: `5`
+
+If `manage_logging` is true, this specifies the number of days to retain logs.
 
 __`tomcat_port`__
 
