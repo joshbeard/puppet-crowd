@@ -21,22 +21,38 @@ class crowd::params {
     'Debian': {
       $shell = '/usr/sbin/nologin'
 
-      if $::operatingsystem == 'Ubuntu' {
-        if $::operatingsystemmajrelease =~ /(12|14)/ {
-          $service_file     = '/etc/init/crowd.conf'
-          $service_template = 'crowd/crowd.upstart.erb'
-          $service_mode     = '0644'
+      case $::operatingsystem {
+        'Ubuntu': {
+          if versioncmp($::operatingsystemmajrelease, '16') >= 0 {
+            $service_file     = '/lib/systemd/system/crowd.service'
+            $service_template = 'crowd/crowd.service.erb'
+            $service_mode     = '0644'
+          }
+          else {
+            $service_file     = '/etc/init.d/crowd'
+            $service_template = 'crowd/crowd.init.erb'
+            $service_mode     = '0755'
+          }
         }
-        else {
-          $service_file     = '/usr/lib/systemd/system/crowd.service'
-          $service_template = 'crowd/crowd.service.erb'
-          $service_mode     = '0644'
+        'Debian': {
+          if versioncmp($::operatingsystemmajrelease, '8') == 0 {
+            $service_file     = '/lib/systemd/system/crowd.service'
+            $service_template = 'crowd/crowd.service.erb'
+            $service_mode     = '0644'
+          } elsif versioncmp($::operatingsystemmajrelease, '9') >= 0 {
+            $service_file     = '/etc/systemd/system/crowd.service'
+            $service_template = 'crowd/crowd.service.erb'
+            $service_mode     = '0644'
+          }
+          else {
+            $service_file     = '/etc/init.d/crowd'
+            $service_template = 'crowd/crowd.init.erb'
+            $service_mode     = '0755'
+          }
         }
-      }
-      else {
-        $service_file     = '/etc/init.d/crowd'
-        $service_template = 'crowd/crowd.init.erb'
-        $service_mode     = '0755'
+        default: {
+          fail("The crowd module is not supported on ${::operatingsystem}")
+        }
       }
     }
 
@@ -45,10 +61,7 @@ class crowd::params {
     }
 
     default: {
-      $shell            = '/sbin/nologin'
-      $service_file     = '/etc/init.d/crowd'
-      $service_template = 'crowd/crowd.init.erb'
-      $service_mode     = '0755'
+      fail("The crowd module is not supported on ${::osfamily}")
     }
   }
 

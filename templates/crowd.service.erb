@@ -1,10 +1,11 @@
 [Unit]
 Description=Atlassian Crowd - Single Sign-On (SSO) and Identity Management
-After=network.target
+After=syslog.target network.target
 
 [Service]
 Type=forking
 User=<%= scope.lookupvar('crowd::user') %>
+Environment="JAVA_HOME=<%= scope.lookupvar('crowd::java_home') %>"
 PIDFile=<%= scope.lookupvar('crowd::app_dir') %>/apache-tomcat/work/crowd.pid
 ExecStart=<%= scope.lookupvar('crowd::app_dir') %>/apache-tomcat/bin/startup.sh
 ExecStop=<%= scope.lookupvar('crowd::app_dir') %>/apache-tomcat/bin/shutdown.sh

@@ -211,11 +211,11 @@ class crowd (
   $dburl   = "jdbc:${dbtype}://${dbserver}:${_dbport}/${dbname}"
   $iddburl = "jdbc:${iddbtype}://${iddbserver}:${_iddbport}/${iddbname}"
 
-  anchor { 'crowd::begin': }->
-  class { 'crowd::install': }->
-  class { 'crowd::facts': }->
-  class { 'crowd::config': }~>
-  class { 'crowd::service': }->
-  anchor { 'crowd::end': }
+  anchor { 'crowd::begin': }
+  ->class { 'crowd::install': }
+  ->class { 'crowd::facts': }
+  ->class { 'crowd::config': }
+  ~>class { 'crowd::service': }
+  ->anchor { 'crowd::end': }
 
 }

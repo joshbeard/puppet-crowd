@@ -12,9 +12,10 @@ class crowd::service {
 
   if $crowd::manage_service {
     service { 'crowd':
-      ensure   => $crowd::service_ensure,
-      enable   => $crowd::service_enable,
-      provider => $crowd::service_provider,
+      ensure    => $crowd::service_ensure,
+      enable    => $crowd::service_enable,
+      provider  => $crowd::service_provider,
+      subscribe => File['crowd_service'],
     }
   }
 }

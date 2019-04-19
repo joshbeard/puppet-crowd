@@ -1,68 +1,113 @@
-#!/bin/sh
-#
-# Crowd startup script
-#
-# chkconfig:   2345 80 05
-#
-# description: Atlassian Crowd
-
+#!/bin/bash
 ### BEGIN INIT INFO
 # Provides: crowd
-# Required-Start: $remote_fs $syslog
-# Required-Stop: $remote_fs $syslog
-# Default-Start: 2345
-# Default-Stop: 016
-# Short-Description: Start and stop the Atlassian Crowd service
-# Description: Provides the crowd authentication service
+# Required-Start:
+# Required-Stop:
+# Should-Start:
+# Should-Stop:
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start up Crowd
+# Description:       Atlassian Crowd
+#                    This service starts up the tomcat webapp.
 ### END INIT INFO
-
-# Source function library.
-. /etc/rc.d/init.d/functions
-
-RUN_AS_USER="<%= scope.lookupvar('crowd::user') %>"
-CATALINA_HOME="<%= scope.lookupvar('crowd::app_dir') %>/apache-tomcat"
-exec="${CATALINA_HOME}/bin/startup.sh"
+ACTION=$1
+SERVICE=crowd
+USER="<%= scope.lookupvar('crowd::user') %>"
+export JAVA_HOME="<%= scope.lookupvar('crowd::java_home') %>"
+export CATALINA_HOME="<%= scope.lookupvar('crowd::app_dir') %>/apache-tomcat"
+START_CMD="<%= scope.lookupvar('crowd::app_dir') %>/start_crowd.sh"
+STOP_CMD="<%= scope.lookupvar('crowd::app_dir') %>/stop_crowd.sh"
+SHUTDOWN_WAIT=10
 pidfile="${CATALINA_HOME}/work/crowd.pid"
 
-crowd_start() {
-  [ -x $exec ] || exit 5
-  echo -n $"Starting crowd: "
-  daemon --user "${RUN_AS_USER}" "${exec}"
-  retval=$?
-  echo
-  return $retval
+function restart() {
+  stop
+  start
 }
 
-crowd_stop() {
-  echo -n $"Stopping crowd: "
-  killproc -p $pidfile
-  retval=$?
-  echo
-  return $retval
+function crowd_pid() {
+  echo $(ps -ef |grep $CATALINA_HOME |grep -v grep | tr -s " " | cut -d " " -f2)
 }
 
-crowd_status() {
-  status -p $pidfile crowd
-  retval=$?
-  echo
-  return $retval
+function terminate() {
+  echo "Terminating ${SERVICE} with pid $(crowd_pid)"
+  kill -9 $(crowd_pid)
 }
 
-case "$1" in
-  start)
-    crowd_start
+function stop() {
+  pid=$(crowd_pid)
+  if [ -n "$pid" ]; then
+    echo -n $"Stopping $SERVICE: "
+    /bin/su -s /bin/bash $USER -c "${STOP_CMD}"
+
+    echo -n "Waiting ${SHUTDOWN_WAIT} seconds for processes to exit "
+    let kwait=$SHUTDOWN_WAIT
+    count=0;
+    until [ `ps -p $pid | grep -c $pid` = '0' ] || [ $count -gt $kwait ]; do
+      sleep 1
+      let count=$count+1
+      echo -n "${count}.."
+    done
+    echo
+
+    if [ $count -gt $kwait ]; then
+      echo "Stopping ${SERVICE} was unsuccessful after ${SHUTDOWN_WAIT} seconds; killing"
+      terminate
+    fi
+  else
+    echo "${SERVICE} is not running"
+    exit 1
+  fi
+
+  return 0
+}
+
+function start() {
+  pid=$(crowd_pid)
+  if [ -n "$pid" ]; then
+    echo "${SERVICE} is already running with pid ${pid}"
+    exit 1
+  else
+    echo -n $"Starting $SERVICE: "
+    /bin/su -s /bin/bash $USER -c "${START_CMD}"
+    RETVAL=$?
+    echo
+    return $RETVAL
+  fi
+}
+
+function status() {
+  pid=$(crowd_pid)
+  if [ -n "${pid}" ]; then
+    echo "${SERVICE} is running with pid ${pid}"
+  else
+    echo "${SERVICE} is not running"
+    exit 1
+  fi
+}
+
+function execute() {
+  case "$ACTION" in
+    start)
+      start
+      ;;
+    stop)
+      stop
+      ;;
+    status)
+      status
+      ;;
+    restart)
+      restart
+      ;;
+    kill)
+      terminate
     ;;
-  stop)
-    crowd_stop
-    ;;
-  status)
-    crowd_status
-    ;;
-  restart)
-    crowd_stop
-    sleep 10
-    crowd_start
-    ;;
-  *)
-    echo "Usage: $0 {start|stop|status|restart}"
-esac
+    *)
+      echo "Usage: $0 {start|stop|status|kill|restart}"
+      exit 1
+  esac
+}
+
+execute

@@ -65,7 +65,7 @@ class crowd::install {
 
   archive { $file:
     source          => "${_download_url}/${file}",
-    path            => "/tmp/$file",
+    path            => "/tmp/${file}",
     extract         => true,
     extract_command => 'tar xzf %s --strip-components=1',
     extract_path    => $crowd::app_dir,
@@ -104,10 +104,10 @@ class crowd::install {
   }
 
   exec { "chown_${crowd::app_dir}":
-    command   => "chown -R ${crowd::user}:${crowd::group} ${crowd::app_dir}",
-    unless    => "find ${crowd::app_dir} ! -type l \\( ! -user ${crowd::user} -type f \\) -o \\( ! -group ${crowd::group} \\) -a \\( -type f \\)| wc -l | awk '{print \$1}' | grep -qE '^0'",
-    path      => '/bin:/usr/bin',
-    require   => Archive[$file],
+    command => "chown -R ${crowd::user}:${crowd::group} ${crowd::app_dir}",
+    unless  => "find ${crowd::app_dir} ! -type l \\( ! -user ${crowd::user} -type f \\) -o \\( ! -group ${crowd::group} \\) -a \\( -type f \\)| wc -l | awk '{print \$1}' | grep -qE '^0'",
+    path    => '/bin:/usr/bin',
+    require => Archive[$file],
   }
 
 }

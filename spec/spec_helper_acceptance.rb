@@ -53,6 +53,8 @@ RSpec.configure do |c|
           on host, 'echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" >> /etc/apt/sources.list'
         end
 
+        on host, 'apt-get install -y iproute2'
+
         on host, 'apt-get update'
       end
 
