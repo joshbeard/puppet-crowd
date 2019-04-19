@@ -1,6 +1,7 @@
 fixtures:
   repositories:
     stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-    staging: "https://github.com/nanliu/puppet-staging"
+    archive: "https://github.com/voxpupuli/puppet-archive.git"
+    augeas_core: "https://github.com/puppetlabs/puppetlabs-augeas_core.git"
   symlinks:
-    crowd: "#{source_dir}"
+    bamboo: "#{source_dir}"
