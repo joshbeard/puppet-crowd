@@ -117,7 +117,7 @@ class crowd (
   validate_re($db, '^(mysql|postgres|oracle)$')
   validate_re($dbuser, '^[a-z_][a-z0-9_-]*[$]?$')
   validate_string($dbpassword)
-  validate_string($dbserver)
+  if !empty($dbserver) { validate_string($dbserver) }
   validate_string($dbname)
   if $dbport { validate_integer($dbport) }
   if $dbdriver { validate_string($dbdriver) }

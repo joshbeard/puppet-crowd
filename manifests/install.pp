@@ -58,7 +58,6 @@ class crowd::install {
         command => $stop_command,
         path    => $::path,
         require => Archive[$file],
-        before  => Archive[$file],
       }
     }
   }

@@ -60,7 +60,6 @@ __Using PostgreSQL database:__
 class { 'crowd':
   db           => 'postgres',
   dbuser       => 'crowd',
-  dbpassword   => 'secret',
   dbserver     => 'localhost',
   iddb         => 'postgres',
   iddbuser     => 'crowdid',
@@ -355,6 +354,8 @@ __`dbpassword`__
 Default:  'crowd'
 
 The database password.
+
+NOTE: This doesn't do anything.
 
 __`dbserver`__
 

@@ -10,11 +10,13 @@ class crowd::params {
         $service_file     = '/usr/lib/systemd/system/crowd.service'
         $service_template = 'crowd/crowd.service.erb'
         $service_mode     = '0644'
+        $service_provider = 'systemd'
       }
       else {
         $service_file     = '/etc/init.d/crowd'
         $service_template = 'crowd/crowd.init.erb'
         $service_mode     = '0755'
+        $service_provider = undef
       }
     }
 
@@ -27,11 +29,13 @@ class crowd::params {
             $service_file     = '/lib/systemd/system/crowd.service'
             $service_template = 'crowd/crowd.service.erb'
             $service_mode     = '0644'
+            $service_provider = 'systemd'
           }
           else {
             $service_file     = '/etc/init.d/crowd'
             $service_template = 'crowd/crowd.init.erb'
             $service_mode     = '0755'
+            $service_provider = undef
           }
         }
         'Debian': {
@@ -39,15 +43,18 @@ class crowd::params {
             $service_file     = '/lib/systemd/system/crowd.service'
             $service_template = 'crowd/crowd.service.erb'
             $service_mode     = '0644'
+            $service_provider = 'systemd'
           } elsif versioncmp($::operatingsystemmajrelease, '9') >= 0 {
             $service_file     = '/etc/systemd/system/crowd.service'
             $service_template = 'crowd/crowd.service.erb'
             $service_mode     = '0644'
+            $service_provider = 'systemd'
           }
           else {
             $service_file     = '/etc/init.d/crowd'
             $service_template = 'crowd/crowd.init.erb'
             $service_mode     = '0755'
+            $service_provider = undef
           }
         }
         default: {
