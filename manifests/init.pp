@@ -3,7 +3,7 @@
 # Refer to the README for documentation
 #
 class crowd (
-  $version            = '2.11.1',
+  $version            = '3.4.3',
   $extension          = 'tar.gz',
   $product            = 'crowd',
   $installdir         = '/opt/crowd',

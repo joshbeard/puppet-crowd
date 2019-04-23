@@ -51,7 +51,7 @@ describe 'crowd' do
               it do
                 is_expected.to contain_file('/etc/puppetlabs/facter/facts.d/crowd_facts.txt').with({
                   :ensure => 'file',
-                  :content => /^crowd_version=2\.11\.1$/,
+                  :content => /^crowd_version=3\.4\.3$/,
                 })
               end
             end

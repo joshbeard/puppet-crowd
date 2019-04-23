@@ -89,7 +89,7 @@ class { 'crowd':
 
 __`version`__
 
-Default:  '3.0.1'
+Default:  '3.4.3'
 
 The version of Crowd to download and install.  MAJOR.MINOR.PATCH
 
