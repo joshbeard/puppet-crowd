@@ -11,17 +11,14 @@ class crowd::config {
   ]
 
   if !empty($crowd::proxy) {
-    $_proxy   = suffix(prefix(join_keys_to_values($crowd::proxy, " '"), 'set Server/Service/Connector/#attribute/'), "'")
-    $_changes = concat($changes, $_proxy)
-  }
-  else {
-    $_proxy   = undef
-    $_changes = $changes
+    $_proxy_changes   = suffix(prefix(join_keys_to_values($crowd::proxy, " '"), 'set Server/Service/Connector/#attribute/'), "'")
+  } else {
+    $_proxy_changes   = undef
   }
 
   if $crowd::manage_logging {
     $_valve_base = '/Server/Service/Engine/Valve[#attribute/className="org.apache.catalina.valves.AccessLogValves"]/#attribute'
-    $_log_valve = [
+    $_log_valve_changes = [
       "set ${valve_base}/className 'org.apache.catalina.valves.AccessLogValves'",
       "set ${valve_base}/maxDays '${crowd::log_max_days}'",
       "set ${valve_base}/directory '${crowd::log_dir}'",
@@ -29,7 +26,6 @@ class crowd::config {
       "set ${valve_base}/suffix '.log'",
       "set ${valve_base}/pattern '%t %{User-Agent}i %h %m %r %b %s %I %{X-AUSERNAME}o'",
     ]
-    $__changes = concat($_changes, $_log_valve)
 
     file_line { 'crowd_catalina_log_dir':
       path  => "${crowd::app_dir}/apache-tomcat/conf/logging.properties",
@@ -89,13 +85,23 @@ class crowd::config {
 
   }
   else {
-    $__changes = $_changes
+    $_log_valvue_changes = undef
   }
+
+  if $crowd::tomcat_address {
+    $_address_changes = [
+      "set Server/Service/Connector/#attribute/address '${crowd::tomcat_address}'",
+    ]
+  } else {
+    $_address_changes = []
+  }
+
+  $_changes = concat($changes, $_proxy_changes, $_log_valve_changes, $_address_changes)
 
   augeas { "${crowd::app_dir}/apache-tomcat/conf/server.xml":
     lens    => 'Xml.lns',
     incl    => "${crowd::app_dir}/apache-tomcat/conf/server.xml",
-    changes => $__changes,
+    changes => $_changes,
   }
 
   file { "${crowd::app_dir}/apache-tomcat/bin/setenv.sh":

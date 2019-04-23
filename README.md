@@ -185,6 +185,12 @@ Default: '8095'
 
 The port that Crowd's Tomcat should listen on.
 
+__`tomcat_address`__
+
+Default: undef
+
+The value for the 'address' attribute on the Tomcat connector.
+
 __`max_threads`__
 
 Default:  '150'
