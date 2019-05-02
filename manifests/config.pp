@@ -19,12 +19,12 @@ class crowd::config {
   if $crowd::manage_logging {
     $_valve_base = '/Server/Service/Engine/Valve[#attribute/className="org.apache.catalina.valves.AccessLogValves"]/#attribute'
     $_log_valve_changes = [
-      "set ${valve_base}/className 'org.apache.catalina.valves.AccessLogValves'",
-      "set ${valve_base}/maxDays '${crowd::log_max_days}'",
-      "set ${valve_base}/directory '${crowd::log_dir}'",
-      "set ${valve_base}/prefix 'localhost_access_log'",
-      "set ${valve_base}/suffix '.log'",
-      "set ${valve_base}/pattern '%t %{User-Agent}i %h %m %r %b %s %I %{X-AUSERNAME}o'",
+      "set ${_valve_base}/className 'org.apache.catalina.valves.AccessLogValves'",
+      "set ${_valve_base}/maxDays '${crowd::log_max_days}'",
+      "set ${_valve_base}/directory '${crowd::log_dir}'",
+      "set ${_valve_base}/prefix 'localhost_access_log'",
+      "set ${_valve_base}/suffix '.log'",
+      "set ${_valve_base}/pattern '%t %{User-Agent}i %h %m %r %b %s %I %{X-AUSERNAME}o'",
     ]
 
     file_line { 'crowd_catalina_log_dir':
