@@ -1,4 +1,4 @@
-class { '::crowd':
+class { 'crowd':
   db    => 'postgres',
   iddb  => 'postgres',
   proxy => {
