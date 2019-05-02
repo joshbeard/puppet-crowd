@@ -1,3 +1,9 @@
+## 2019-05-02 - Release 1.1.2
+
+### Summary
+
+- Fix variable reference in custom logging configuration. (03cd783)
+
 ## 2019-04-23 - Release 1.1.1
 
 ### Summary
