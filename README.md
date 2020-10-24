@@ -1,5 +1,11 @@
 # puppet-crowd
 
+__NOTICE:__ This project is dormant and looking for a new owner. As of 2020,
+this is the most actively used [Crowd module on the Forge](https://forge.puppet.com/joshbeard/crowd). If you want to assume maintenance of this module, please get
+in touch.
+
+---
+
 [![Puppet Forge](http://img.shields.io/puppetforge/v/joshbeard/crowd.svg)](https://forge.puppetlabs.com/joshbeard/crowd)
 [![Build Status](https://travis-ci.org/joshbeard/puppet-crowd.png?branch=master)](https://travis-ci.org/joshbeard/puppet-crowd)
 
